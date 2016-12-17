@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <property name="locations">
+        <list>
+            <value>other/config.properties</value>
+            <value>sdk/easemob.properties</value>
+        </list>
+    </property>
+</config>

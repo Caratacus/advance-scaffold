@@ -1,0 +1,6 @@
+
+/*下拉框长度调整*/
+.combo-panel {
+    height:130px;
+    overflow: auto;
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.advance.scaffold.mapper.SysRoleMapper">
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+		 ro.id, ro.name, ro.seq, ro.description, ro.is_default AS isDefault
+	</sql>
+
+    <!--获取该角色详细信息-->
+    <select id="getBySelect" resultType="SysRole" parameterType="java.lang.Long">
+		SELECT DISTINCT
+			ro.id,
+			ro.`name`,
+			ro.seq,
+			ro.description,
+			ro.is_default AS isDefault,
+			group_concat(re.id) resourceIds,
+			group_concat(re.`name`) resourceNames
+		FROM
+			sys_role ro
+		INNER JOIN sys_role_resource rore ON ro.id = rore.role_id
+		INNER JOIN sys_resource re ON re.id = rore.resource_id
+		WHERE
+		ro.id = #{id}
+	</select>
+</mapper>

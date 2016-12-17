@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.advance.scaffold.mapper.SysResourceMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id, name, url, description, icon iconCls,re.icon, pid, seq, state as rstate, resource_type AS resourceType, create_time AS createTime
+	</sql>
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List2">
+		 re.id, re.name, re.url, re.description, re.icon iconCls,re.icon, re.pid, re.seq, re.state rstate,re.resource_type AS resourceType, re.create_time AS createTime
+	</sql>
+
+	<!--获取该用户权限列表-->
+	<select id="getResourceList" resultType="SysResource" parameterType="java.util.HashMap">
+		SELECT DISTINCT
+		<include refid="Base_Column_List2" />
+		FROM
+		sys_resource re
+		INNER JOIN sys_role_resource rore ON re.id = rore.resource_id
+		INNER JOIN sys_user_role uro ON rore.role_id = uro.role_id
+		<where>
+			<if test="resourcetype != null">
+				re.resource_type = #{resourcetype}
+			</if>
+			<if test="userId != null">
+				and uro.user_id = #{userId}
+			</if>
+		</where>
+		order by re.seq
+	</select>
+
+	<!--用于添加资源记录时显示所有资源tree-->
+	<select id="getResourceAllTree2" resultType="SysResource">
+		SELECT DISTINCT
+		<include refid="Base_Column_List2" />
+		FROM
+		sys_resource re
+		LEFT JOIN sys_resource ree on re.id = ree.pid
+		WHERE
+		re.resource_type = 0
+		AND re.state = 0
+		AND re.id NOT IN (
+		SELECT
+		res.id
+		FROM
+		sys_resource res
+		WHERE
+		res.resource_type = 0
+		AND res.state = 1
+		)
+		ORDER BY
+		re.seq
+	</select>
+
+	<!--获取该用户tree列表-->
+	<select id="getResourceTree" resultType="SysResource">
+		SELECT DISTINCT
+		<include refid="Base_Column_List2" />
+		FROM
+		sys_resource re
+		left join sys_resource ree on re.id = ree.pid
+		order by re.seq
+	</select>
+	<!--显示所有资源tree-->
+	<select id="getAllResources" resultType="SysResource">
+		SELECT
+			<include refid="Base_Column_List2" />
+		FROM
+			sys_resource re
+		LEFT JOIN sys_resource sr ON re.pid = sr.id
+		WHERE
+			re.state = 0
+		AND re.pid NOT IN (
+		SELECT
+			res.id
+		FROM
+			sys_resource res
+		WHERE
+			res.resource_type = 0
+		AND res.state = 1
+		)
+		ORDER BY
+			re.seq
+	</select>
+</mapper>

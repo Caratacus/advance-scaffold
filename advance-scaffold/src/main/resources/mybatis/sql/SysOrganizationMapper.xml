@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.advance.scaffold.mapper.SysOrganizationMapper">
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+		 id, name, address, code, icon, icon as iconCls, pid, seq, create_time AS createTime
+	</sql>
+    <!--获取部门列表-->
+    <select id="treeGrid" resultType="SysOrganization">
+		SELECT
+			so.id,
+			so.`name`,
+			so.address,
+			so.code,
+			so.icon,
+			so.icon as iconCls,
+			so.pid,
+			so.seq,
+			so.create_time AS createTime
+		FROM
+			sys_organization so
+		LEFT JOIN sys_organization so2 ON so.pid = so2.id
+		ORDER BY
+			so.seq
+	</select>
+</mapper>

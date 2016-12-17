@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	                            http://www.springframework.org/schema/context 
+	                            http://www.springframework.org/schema/context/spring-context-4.3.xsd
+								http://www.springframework.org/schema/tx 
+								http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+								http://www.springframework.org/schema/aop 
+								http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <bean id="config"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc/datasource.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Alibaba DataSource数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="filters" value="${jdbc.filters}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="testOnReturn" value="${jdbc.testOnReturn}"/>
+        <property name="poolPreparedStatements" value="${jdbc.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${jdbc.maxPoolPreparedStatementPerConnectionSize}"/>
+        <property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements}"/>
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"/>
+        <!-- 单位秒 -->
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"/>
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"/>
+    </bean>
+
+    <!-- mybatis的配置映射文件简易配置与mybatis-plus配置 -->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="typeAliasesPackage" value="com.advance.scaffold.model"/>
+        <property name="mapperLocations" value="classpath:mybatis/sql/*Mapper.xml"></property>
+        <property name="globalConfig" ref="globalConfiguration"></property>
+        <property name="plugins">
+            <array>
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor" class="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+                    <property name="dialectType" value="mysql"/>
+                    <property name="optimizeType" value="jsqlparser"/>
+                </bean>
+                <bean class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor">
+                    <property name="maxTime" value="5000" />
+                    <property name="format" value="true" />
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="globalConfiguration" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+        <property name="dbType" value="mysql"/>
+        <!-- 0为自增 -->
+        <property name="idType" value="2"/>
+        <property name="dbColumnUnderline" value="false"/>
+    </bean>
+
+    <!-- mapper自动扫描 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.advance.scaffold.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--Mybatis plus 热加载-->
+    <!--参数说明：-->
+    <!--sqlSessionFactory:session工厂-->
+    <!--mapperLocations:mapper匹配路径-->
+    <!--enabled:是否开启动态加载  默认:false-->
+    <!--delaySeconds:项目启动延迟加载时间  单位：秒  默认:10s-->
+    <!--sleepSeconds:刷新时间间隔  单位：秒 默认:20s-->
+    <bean class="com.baomidou.mybatisplus.spring.MybatisMapperRefresh">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <constructor-arg name="mapperLocations" value="classpath:mybatis/sql/*Mapper.xml"/>
+        <constructor-arg name="enabled" value="true"/>
+        <constructor-arg name="delaySeconds" value="3"/>
+        <constructor-arg name="sleepSeconds" value="3"/>
+    </bean>
+
+</beans>
