@@ -1,10 +1,10 @@
 package com.advance.scaffold.model;
 
-import java.util.Date;
-
 import com.advance.scaffold.core.model.AutoBaseModel;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+
+import java.util.Date;
 
 /**
  *
@@ -24,9 +24,6 @@ public class SysUser extends AutoBaseModel {
 
 	private String password;
 
-	@TableField(value = "customer_id")
-	private Integer customerId;
-
 	private Integer sex;
 
 	private Integer age;
@@ -37,20 +34,12 @@ public class SysUser extends AutoBaseModel {
 	@TableField(value = "user_type")
 	private Integer userType;
 
-	@TableField(value = "is_default")
-	private Integer isDefault;
-
 	private Integer state;
-
-	@TableField(value = "organization_id")
-	private Integer organizationId;
 
 	@TableField(value = "create_time")
 	private Date createTime;
 
 	private String phone;
-	@TableField(exist = false)
-	private String organizationName;
 	@TableField(exist = false)
 	private String roleIds;
 	@TableField(exist = false)
@@ -77,14 +66,6 @@ public class SysUser extends AutoBaseModel {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Integer getCustomerId() {
-		return this.customerId;
-	}
-
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
 	}
 
 	public Integer getSex() {
@@ -117,14 +98,6 @@ public class SysUser extends AutoBaseModel {
 
 	public void setState(Integer state) {
 		this.state = state;
-	}
-
-	public Integer getOrganizationId() {
-		return this.organizationId;
-	}
-
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
 	}
 
 	public String getPhone() {
@@ -167,28 +140,12 @@ public class SysUser extends AutoBaseModel {
 		this.userType = userType;
 	}
 
-	public Integer getIsDefault() {
-		return isDefault;
-	}
-
-	public void setIsDefault(Integer isDefault) {
-		this.isDefault = isDefault;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public String getOrganizationName() {
-		return organizationName;
-	}
-
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
 	}
 
 	public String getRoleIds() {

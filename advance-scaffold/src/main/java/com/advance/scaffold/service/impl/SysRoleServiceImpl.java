@@ -38,7 +38,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	@Override
 	public List<Tree> tree() {
 		List<Tree> trees = new ArrayList<Tree>();
-		List<SysRole> sysRoles = this.selectList(Condition.instance().orderBy("seq"));
+		List<SysRole> sysRoles = this.selectList(Condition.Empty());
 		if ((sysRoles != null) && (sysRoles.size() > 0)) {
 			for (SysRole sysRole : sysRoles) {
 				Tree tree = new Tree();

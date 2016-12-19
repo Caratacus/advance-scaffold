@@ -1,10 +1,10 @@
 package com.advance.scaffold.model;
 
-import java.util.Date;
-
 import com.advance.scaffold.core.model.AutoBaseModel;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+
+import java.util.Date;
 
 /**
  *
@@ -26,8 +26,6 @@ public class SysResource extends AutoBaseModel {
 	private String icon;
 
 	private Integer pid;
-
-	private Integer seq;
 
 	@TableField(value = "state")
 	private Integer rstate;
@@ -79,14 +77,6 @@ public class SysResource extends AutoBaseModel {
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
-	}
-
-	public Integer getSeq() {
-		return this.seq;
-	}
-
-	public void setSeq(Integer seq) {
-		this.seq = seq;
 	}
 
 	public Integer getRstate() {

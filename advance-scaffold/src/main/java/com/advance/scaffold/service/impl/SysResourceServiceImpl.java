@@ -5,6 +5,7 @@ import com.advance.scaffold.mapper.SysResourceMapper;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
 import com.advance.scaffold.core.model.Tree;
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	@Override
 	public List<String> listAllResource() {
 		List<String> resourceList = new ArrayList<String>();
-		List<SysResource> list = this.selectList(new EntityWrapper<SysResource>().orderBy("seq"));
+		List<SysResource> list = this.selectList(Condition.Empty());
 		for (int i = 0; i < list.size(); i++) {
 			resourceList.add(list.get(i).getUrl());
 		}

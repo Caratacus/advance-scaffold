@@ -60,7 +60,6 @@ public class SysRoleController extends ConsoleController {
 	public void add(SysRole role) {
 		Json json = new Json();
 		try {
-			role.setIsDefault(GlobalConstant.NOT_DEFAULT);
 			sysRoleService.insert(role);
 			json.setSuccess(true);
 			json.setMsg("添加成功！");
