@@ -4,11 +4,11 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id, name, url, description, icon iconCls,re.icon, pid, seq, state as rstate, resource_type AS resourceType, create_time AS createTime
+		 id, name, url, description, icon iconCls,re.icon, pid, state as rstate, resource_type AS resourceType, create_time AS createTime
 	</sql>
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List2">
-		 re.id, re.name, re.url, re.description, re.icon iconCls,re.icon, re.pid, re.seq, re.state rstate,re.resource_type AS resourceType, re.create_time AS createTime
+		 re.id, re.name, re.url, re.description, re.icon iconCls,re.icon, re.pid, re.state rstate,re.resource_type AS resourceType, re.create_time AS createTime
 	</sql>
 
 	<!--获取该用户权限列表-->
@@ -27,7 +27,6 @@
 				and uro.user_id = #{userId}
 			</if>
 		</where>
-		order by re.seq
 	</select>
 
 	<!--用于添加资源记录时显示所有资源tree-->
@@ -49,8 +48,6 @@
 		res.resource_type = 0
 		AND res.state = 1
 		)
-		ORDER BY
-		re.seq
 	</select>
 
 	<!--获取该用户tree列表-->
@@ -60,7 +57,6 @@
 		FROM
 		sys_resource re
 		left join sys_resource ree on re.id = ree.pid
-		order by re.seq
 	</select>
 	<!--显示所有资源tree-->
 	<select id="getAllResources" resultType="SysResource">
@@ -80,7 +76,5 @@
 			res.resource_type = 0
 		AND res.state = 1
 		)
-		ORDER BY
-			re.seq
 	</select>
 </mapper>

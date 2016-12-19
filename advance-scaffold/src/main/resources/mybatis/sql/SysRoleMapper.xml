@@ -4,7 +4,7 @@
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-		 ro.id, ro.name, ro.seq, ro.description, ro.is_default AS isDefault
+		 ro.id, ro.name, ro.description
 	</sql>
 
     <!--获取该角色详细信息-->
@@ -12,9 +12,7 @@
 		SELECT DISTINCT
 			ro.id,
 			ro.`name`,
-			ro.seq,
 			ro.description,
-			ro.is_default AS isDefault,
 			group_concat(re.id) resourceIds,
 			group_concat(re.`name`) resourceNames
 		FROM

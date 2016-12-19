@@ -18,20 +18,7 @@
     <title>用户管理</title>
     <script type="text/javascript">
         var dataGrid;
-        var organizationTree;
         $(function () {
-
-            organizationTree = $('#organizationTree').tree({
-                url: '${root}/organization/tree',
-                parentField: 'pid',
-                lines: true,
-                onClick: function (node) {
-                    dataGrid.datagrid('load', {
-                        organizationId: node.id
-                    });
-                }
-            });
-
             dataGrid = $('#dataGrid').datagrid({
                 url: '${root}/user/dataGrid',
                 fit: true,
@@ -54,16 +41,7 @@
                     title: '姓名',
                     field: 'name',
                     sortable: true
-                }, {
-                    width: '80',
-                    title: '部门ID',
-                    field: 'organizationId',
-                    hidden: true
-                }, {
-                    width: '80',
-                    title: '所属部门',
-                    field: 'organizationName'
-                }, {
+                },{
                     width: '125',
                     title: '创建时间',
                     field: 'createTime',
@@ -261,10 +239,6 @@
 </div>
 <div data-options="region:'center',border:true,title:'用户列表'">
     <table id="dataGrid" data-options="fit:true,border:false"></table>
-</div>
-<div data-options="region:'west',border:true,split:false,title:'组织机构'" style="width:180px;overflow: hidden; ">
-    <ul id="organizationTree" style="width:160px;margin: 10px 10px 10px 10px">
-    </ul>
 </div>
 <div id="toolbar" style="display: none;">
     <c:if test="${fn:contains(sessionInfo.resourceList, '/user/add')}">

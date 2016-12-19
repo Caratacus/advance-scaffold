@@ -99,19 +99,6 @@
                     }
                 }, 'json');
             });
-            /*$.messager.confirm('提示','确定要退出?',function(r){
-             if (r){
-             progressLoad();
-             $.post( '
-            ${root}/welcome/logout', function(result) {
-             if(result.success){
-             progressClose();
-             window.location.href='
-            ${root}/welcome/index';
-             }
-             }, 'json');
-             }
-             });*/
         }
 
 
@@ -174,7 +161,7 @@
                     <h2>系统介绍</h2>
                     <div class="light-info">
                         <div class="light-tip icon-tip"></div>
-                        <div>超级万学APP后台管理平台。</div>
+                        <div>后台管理平台。</div>
                     </div>
                 </div>
             </div>
@@ -192,7 +179,7 @@
 
     </div>
     <div data-options="region:'south',border:false"
-         style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee"> 版权所有@万学教育
+         style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee"> 版权所有@Web+
     </div>
 </div>
 
