@@ -3,7 +3,6 @@
     <property name="locations">
         <list>
             <value>other/config.properties</value>
-            <value>sdk/easemob.properties</value>
         </list>
     </property>
 </config>

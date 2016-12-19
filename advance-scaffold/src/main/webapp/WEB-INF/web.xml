@@ -51,26 +51,6 @@
         <servlet-name>springMVC</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!--alibaba Druid 监控-->
-    <!--{baseUrl}/druid/index.html-->
-    <servlet>
-        <servlet-name>DruidStatView</servlet-name>
-        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-        <init-param>
-            <!-- 用户名 -->
-            <param-name>loginUsername</param-name>
-            <param-value>Caratacus</param-value>
-        </init-param>
-        <init-param>
-            <!-- 密码 -->
-            <param-name>loginPassword</param-name>
-            <param-value>Caratacus</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DruidStatView</servlet-name>
-        <url-pattern>/druid/*</url-pattern>
-    </servlet-mapping>
     <!-- 配置session超时时间，单位分钟 -->
     <session-config>
         <session-timeout>60</session-timeout>
