@@ -1,4 +1,4 @@
-package com.advance.scaffold;
+package com.advance.scaffold.quartz;
 
 import com.advance.scaffold.model.ScheduleJobEntity;
 import com.advance.scaffold.model.ScheduleJobLogEntity;

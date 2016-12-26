@@ -1,4 +1,4 @@
-package com.advance.scaffold;
+package com.advance.scaffold.quartz;
 
 /**
      * 定时任务状态

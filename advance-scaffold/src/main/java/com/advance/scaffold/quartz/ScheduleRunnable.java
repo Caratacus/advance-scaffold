@@ -1,4 +1,4 @@
-package com.advance.scaffold;
+package com.advance.scaffold.quartz;
 
 import com.app.common.StringUtils;
 import com.app.common.spring.ApplicationUtils;

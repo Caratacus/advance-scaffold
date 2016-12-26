@@ -1,4 +1,4 @@
-package com.advance.scaffold;
+package com.advance.scaffold.quartz;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;

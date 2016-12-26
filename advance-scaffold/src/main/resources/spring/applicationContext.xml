@@ -94,4 +94,6 @@
         <constructor-arg name="sleepSeconds" value="3"/>
     </bean>
 
+    <import resource="classpath:quartz/quartz-config.xml"/>
+
 </beans>

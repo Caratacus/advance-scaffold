@@ -1,7 +1,7 @@
 package com.advance.scaffold.service.impl;
 
-import com.advance.scaffold.ScheduleStatus;
-import com.advance.scaffold.ScheduleUtils;
+import com.advance.scaffold.quartz.ScheduleStatus;
+import com.advance.scaffold.quartz.ScheduleUtils;
 import com.advance.scaffold.mapper.ScheduleJobDao;
 import com.advance.scaffold.model.ScheduleJobEntity;
 import com.advance.scaffold.service.ScheduleJobService;
