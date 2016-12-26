@@ -95,5 +95,7 @@
     </bean>
 
     <import resource="classpath:quartz/quartz-config.xml"/>
+    <import resource="classpath:redis/redis-config.xml"/>
+    <import resource="classpath:ehcache/ehcache-config.xml"/>
 
 </beans>
