@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advance.scaffold.mapper.ScheduleJobLogDao;
+import com.advance.scaffold.mapper.ScheduleJobLogMapper;
 import com.advance.scaffold.model.ScheduleJobLogEntity;
 import com.advance.scaffold.service.ScheduleJobLogService;
 
@@ -14,7 +14,7 @@ import com.advance.scaffold.service.ScheduleJobLogService;
 @Service("scheduleJobLogService")
 public class ScheduleJobLogServiceImpl implements ScheduleJobLogService {
 	@Autowired
-	private ScheduleJobLogDao scheduleJobLogDao;
+	private ScheduleJobLogMapper scheduleJobLogDao;
 	
 	@Override
 	public ScheduleJobLogEntity queryObject(Long jobId) {

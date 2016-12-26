@@ -11,6 +11,6 @@ import com.advance.scaffold.model.ScheduleJobLogEntity;
  * @email sunlightcs@gmail.com
  * @date 2016年12月1日 下午10:30:02
  */
-public interface ScheduleJobLogDao extends BaseDao<ScheduleJobLogEntity> {
+public interface ScheduleJobLogMapper extends BaseDao<ScheduleJobLogEntity> {
 	
 }

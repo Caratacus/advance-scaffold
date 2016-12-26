@@ -13,7 +13,7 @@ import java.util.Map;
  * @email sunlightcs@gmail.com
  * @date 2016年12月1日 下午10:29:57
  */
-public interface ScheduleJobDao extends BaseDao<ScheduleJobEntity> {
+public interface ScheduleJobMapper extends BaseDao<ScheduleJobEntity> {
 	
 	/**
 	 * 批量更新状态

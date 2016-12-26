@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.advance.scaffold.mapper.ScheduleJobLogDao">
-	<select id="queryObject" resultType="io.renren.entity.ScheduleJobLogEntity" >
+<mapper namespace="com.advance.scaffold.mapper.ScheduleJobLogMapper">
+	<select id="queryObject" resultType="ScheduleJobLogEntity" >
 		select * from schedule_job_log where log_id = #{value}
 	</select> 
 
-	<select id="queryList" resultType="io.renren.entity.ScheduleJobLogEntity" >
+	<select id="queryList" resultType="ScheduleJobLogEntity" >
 		select * from schedule_job_log 
 		<where>
 			<if test="jobId != null">
@@ -28,7 +28,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="io.renren.entity.ScheduleJobLogEntity">
+	<insert id="save" parameterType="ScheduleJobLogEntity">
 		insert into schedule_job_log
 		(
 			`job_id`, 

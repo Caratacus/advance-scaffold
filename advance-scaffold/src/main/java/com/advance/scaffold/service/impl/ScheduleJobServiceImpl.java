@@ -2,7 +2,7 @@ package com.advance.scaffold.service.impl;
 
 import com.advance.scaffold.quartz.ScheduleStatus;
 import com.advance.scaffold.quartz.ScheduleUtils;
-import com.advance.scaffold.mapper.ScheduleJobDao;
+import com.advance.scaffold.mapper.ScheduleJobMapper;
 import com.advance.scaffold.model.ScheduleJobEntity;
 import com.advance.scaffold.service.ScheduleJobService;
 import org.quartz.CronTrigger;
@@ -24,7 +24,7 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	@Autowired
     private Scheduler scheduler;
 	@Autowired
-	private ScheduleJobDao schedulerJobDao;
+	private ScheduleJobMapper schedulerJobDao;
 	
 	/**
 	 * 项目启动时，初始化定时器
