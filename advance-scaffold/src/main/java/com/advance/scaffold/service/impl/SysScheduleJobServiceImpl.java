@@ -27,6 +27,7 @@ import java.util.List;
  */
 @Service
 public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper, SysScheduleJob> implements SysScheduleJobService {
+
 	@Autowired
 	private Scheduler scheduler;
 
@@ -71,14 +72,12 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public int updateBatchScheduleJob(Long[] jobIds, int status) {
+	public void updateBatchScheduleJob(Long[] jobIds, int status) {
 		List<SysScheduleJob> scheduleJobs = selectList(Condition.instance().in("id", jobIds));
 		for (SysScheduleJob scheduleJob : scheduleJobs) {
 			scheduleJob.setStatus(status);
 		}
 		updateBatchById(scheduleJobs);
-		// TODO
-		return 1;
 	}
 
 	@Override

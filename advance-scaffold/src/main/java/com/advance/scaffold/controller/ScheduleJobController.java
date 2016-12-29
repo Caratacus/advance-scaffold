@@ -14,11 +14,12 @@ import com.app.common.StringUtils;
 import com.baomidou.mybatisplus.mapper.Condition;
 
 /**
- * 定时任务
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月28日 下午2:16:40
+ * <p>
+ * 定时任务ScheduleJobController
+ * </p>
+ *
+ * @author Caratacus
+ * @since 2016-12-29
  */
 @RestController
 @RequestMapping("/sys/schedule")
@@ -53,10 +54,7 @@ public class ScheduleJobController extends ConsoleController {
 	public Object save(@RequestBody SysScheduleJob scheduleJob) {
 		// 数据校验
 		verifyForm(scheduleJob);
-
 		sysScheduleJobService.saveScheduleJob(scheduleJob);
-
-		// return R.ok();
 		return null;
 
 	}
@@ -68,11 +66,8 @@ public class ScheduleJobController extends ConsoleController {
 	public Object update(@RequestBody SysScheduleJob scheduleJob) {
 		// 数据校验
 		verifyForm(scheduleJob);
-
 		sysScheduleJobService.updateScheduleJob(scheduleJob);
 		return null;
-
-		// return R.ok();
 	}
 
 	/**
@@ -81,10 +76,7 @@ public class ScheduleJobController extends ConsoleController {
 	@RequestMapping("/delete")
 	public Object delete(@RequestBody Long[] jobIds) {
 		sysScheduleJobService.deleteBatchScheduleJob(jobIds);
-
-		// return R.ok();
 		return null;
-
 	}
 
 	/**
@@ -93,8 +85,6 @@ public class ScheduleJobController extends ConsoleController {
 	@RequestMapping("/run")
 	public Object run(@RequestBody Long[] jobIds) {
 		sysScheduleJobService.run(jobIds);
-
-		// return R.ok();
 		return null;
 
 	}
@@ -105,8 +95,6 @@ public class ScheduleJobController extends ConsoleController {
 	@RequestMapping("/pause")
 	public Object pause(@RequestBody Long[] jobIds) {
 		sysScheduleJobService.pause(jobIds);
-
-		// return R.ok();
 		return null;
 
 	}
@@ -117,8 +105,6 @@ public class ScheduleJobController extends ConsoleController {
 	@RequestMapping("/resume")
 	public Object resume(@RequestBody Long[] jobIds) {
 		sysScheduleJobService.resume(jobIds);
-
-		// return R.ok();
 		return null;
 	}
 

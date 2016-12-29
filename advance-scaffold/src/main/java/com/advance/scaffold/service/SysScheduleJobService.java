@@ -31,7 +31,7 @@ public interface SysScheduleJobService extends IService<SysScheduleJob> {
 	/**
 	 * 批量更新定时任务状态
 	 */
-	int updateBatchScheduleJob(Long[] jobIds, int status);
+	void updateBatchScheduleJob(Long[] jobIds, int status);
 
 	/**
 	 * 立即执行

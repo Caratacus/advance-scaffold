@@ -14,13 +14,15 @@ import org.quartz.TriggerKey;
 import com.advance.scaffold.model.SysScheduleJob;
 
 /**
+ * <p>
  * 定时任务工具类
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年11月30日 下午12:44:59
+ * </p>
+ *
+ * @author Caratacus
+ * @since 2016-12-29
  */
 public class ScheduleUtils {
+
 	public static final String JOB_PARAM_KEY = "JOB_PARAM_KEY";
 
 	private final static String JOB_NAME = "TASK_";
@@ -117,7 +119,6 @@ public class ScheduleUtils {
 			// 参数
 			JobDataMap dataMap = new JobDataMap();
 			dataMap.put(JOB_PARAM_KEY, scheduleJob);
-
 			scheduler.triggerJob(getJobKey(scheduleJob.getId()), dataMap);
 		} catch (SchedulerException e) {
 			throw new RuntimeException("立即执行定时任务失败", e);
