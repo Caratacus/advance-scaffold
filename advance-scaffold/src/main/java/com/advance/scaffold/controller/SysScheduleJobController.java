@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.mapper.Condition;
  */
 @RestController
 @RequestMapping("/sys/schedule")
-public class ScheduleJobController extends ConsoleController {
+public class SysScheduleJobController extends ConsoleController {
 	@Autowired
 	private SysScheduleJobService sysScheduleJobService;
 
