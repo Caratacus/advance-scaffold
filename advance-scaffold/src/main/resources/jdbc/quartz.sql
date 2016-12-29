@@ -1,7 +1,26 @@
+/*
+Navicat MySQL Data Transfer
 
--- 定时任务
-CREATE TABLE `schedule_job` (
-  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务id',
+Source Server         : 本地机
+Source Server Version : 50527
+Source Host           : 127.0.0.1:3306
+Source Database       : advance-scaffold
+
+Target Server Type    : MYSQL
+Target Server Version : 50527
+File Encoding         : 65001
+
+Date: 2016-12-29 16:27:37
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for sys_schedule_job
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_schedule_job`;
+CREATE TABLE `sys_schedule_job` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务id',
   `bean_name` varchar(32) DEFAULT NULL COMMENT 'spring bean名称',
   `method_name` varchar(32) DEFAULT NULL COMMENT '方法名',
   `params` varchar(128) DEFAULT NULL COMMENT '参数',
@@ -9,12 +28,21 @@ CREATE TABLE `schedule_job` (
   `status` tinyint(4) DEFAULT NULL COMMENT '任务状态',
   `remark` varchar(64) DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`job_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='定时任务';
 
--- 定时任务日志
-CREATE TABLE `schedule_job_log` (
-  `log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志id',
+-- ----------------------------
+-- Records of sys_schedule_job
+-- ----------------------------
+INSERT INTO `sys_schedule_job` VALUES ('1', 'testTask', 'test', 'renren', '0 0/30 * * * ?', '0', '有参数测试', '2016-12-01 23:16:46');
+INSERT INTO `sys_schedule_job` VALUES ('2', 'testTask', 'test2', null, '0 0/30 * * * ?', '1', '无参数测试', '2016-12-03 14:55:56');
+
+-- ----------------------------
+-- Table structure for sys_schedule_job_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_schedule_job_log`;
+CREATE TABLE `sys_schedule_job_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志id',
   `job_id` bigint(20) NOT NULL COMMENT '任务id',
   `bean_name` varchar(32) DEFAULT NULL COMMENT 'spring bean名称',
   `method_name` varchar(32) DEFAULT NULL COMMENT '方法名',
@@ -23,13 +51,13 @@ CREATE TABLE `schedule_job_log` (
   `error` varchar(128) DEFAULT NULL COMMENT '失败信息',
   `times` int(11) NOT NULL COMMENT '耗时(单位：毫秒)',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`log_id`),
+  PRIMARY KEY (`id`),
   KEY `job_id` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
 
-INSERT INTO `schedule_job` (`bean_name`, `method_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('testTask', 'test', 'renren', '0 0/30 * * * ?', '0', '有参数测试', '2016-12-01 23:16:46');
-INSERT INTO `schedule_job` (`bean_name`, `method_name`, `params`, `cron_expression`, `status`, `remark`, `create_time`) VALUES ('testTask', 'test2', NULL, '0 0/30 * * * ?', '1', '无参数测试', '2016-12-03 14:55:56');
-
+-- ----------------------------
+-- Records of sys_schedule_job_log
+-- ----------------------------
 --  quartz相关表结构
 CREATE TABLE QRTZ_JOB_DETAILS(
 SCHED_NAME VARCHAR(32) NOT NULL,

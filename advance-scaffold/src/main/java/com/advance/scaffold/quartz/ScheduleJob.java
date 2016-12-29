@@ -1,6 +1,6 @@
 package com.advance.scaffold.quartz;
 
-import com.advance.scaffold.model.ScheduleJobEntity;
+import com.advance.scaffold.model.SysScheduleJob;
 import com.advance.scaffold.model.SysScheduleJobLog;
 import com.advance.scaffold.service.SysScheduleJobLogService;
 import com.app.common.spring.ApplicationUtils;
@@ -15,7 +15,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-
 /**
  * 定时任务
  * 
@@ -26,54 +25,53 @@ import java.util.concurrent.Future;
 public class ScheduleJob extends QuartzJobBean {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private ExecutorService service = Executors.newSingleThreadExecutor();
-	
-    @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        ScheduleJobEntity scheduleJob = (ScheduleJobEntity) context.getMergedJobDataMap()
-        		.get(ScheduleJobEntity.JOB_PARAM_KEY);
 
-        //获取spring bean
-        SysScheduleJobLogService sysScheduleJobLogService = ApplicationUtils.getBean("SysScheduleJobLogService");
+	@Override
+	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+		SysScheduleJob scheduleJob = (SysScheduleJob) context.getMergedJobDataMap().get(ScheduleUtils.JOB_PARAM_KEY);
 
-        //数据库保存执行记录
+		// 获取spring bean
+		SysScheduleJobLogService sysScheduleJobLogService = ApplicationUtils.getBean("SysScheduleJobLogService");
+
+		// 数据库保存执行记录
 		SysScheduleJobLog scheduleJobLog = new SysScheduleJobLog();
-        scheduleJobLog.setJobId(scheduleJob.getJobId());
-        scheduleJobLog.setBeanName(scheduleJob.getBeanName());
-        scheduleJobLog.setMethodName(scheduleJob.getMethodName());
-        scheduleJobLog.setParams(scheduleJob.getParams());
-        scheduleJobLog.setCreateTime(new Date());
+		scheduleJobLog.setJobId(scheduleJob.getId());
+		scheduleJobLog.setBeanName(scheduleJob.getBeanName());
+		scheduleJobLog.setMethodName(scheduleJob.getMethodName());
+		scheduleJobLog.setParams(scheduleJob.getParams());
+		scheduleJobLog.setCreateTime(new Date());
 
-        //任务开始时间
-        long startTime = System.currentTimeMillis();
+		// 任务开始时间
+		long startTime = System.currentTimeMillis();
 
-        try {
-            //执行任务
-        	logger.info("任务准备执行，任务ID：" + scheduleJob.getJobId());
-            ScheduleRunnable task = new ScheduleRunnable(scheduleJob.getBeanName(),
-            		scheduleJob.getMethodName(), scheduleJob.getParams());
-            Future<?> future = service.submit(task);
-            
+		try {
+			// 执行任务
+			logger.info("任务准备执行，任务ID：" + scheduleJob.getId());
+			ScheduleRunnable task = new ScheduleRunnable(scheduleJob.getBeanName(), scheduleJob.getMethodName(),
+					scheduleJob.getParams());
+			Future<?> future = service.submit(task);
+
 			future.get();
-			
-			//任务执行总时长
+
+			// 任务执行总时长
 			long times = System.currentTimeMillis() - startTime;
-			scheduleJobLog.setTimes((int)times);
-			//任务状态    0：成功    1：失败
+			scheduleJobLog.setTimes((int) times);
+			// 任务状态 0：成功 1：失败
 			scheduleJobLog.setStatus(0);
-			
-			logger.info("任务执行完毕，任务ID：" + scheduleJob.getJobId() + "  总共耗时：" + times + "毫秒");
+
+			logger.info("任务执行完毕，任务ID：" + scheduleJob.getId() + "  总共耗时：" + times + "毫秒");
 		} catch (Exception e) {
-			logger.error("任务执行失败，任务ID：" + scheduleJob.getJobId(), e);
-			
-			//任务执行总时长
+			logger.error("任务执行失败，任务ID：" + scheduleJob.getId(), e);
+
+			// 任务执行总时长
 			long times = System.currentTimeMillis() - startTime;
-			scheduleJobLog.setTimes((int)times);
-			
-			//任务状态    0：成功    1：失败
+			scheduleJobLog.setTimes((int) times);
+
+			// 任务状态 0：成功 1：失败
 			scheduleJobLog.setStatus(1);
 			scheduleJobLog.setError(e.toString().substring(0, 2000));
-		}finally {
+		} finally {
 			sysScheduleJobLogService.insert(scheduleJobLog);
 		}
-    }
+	}
 }
