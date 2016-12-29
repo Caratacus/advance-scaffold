@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public void saveScheduleJob(SysScheduleJob scheduleJob) {
+	public void insertJob(SysScheduleJob scheduleJob) {
 		scheduleJob.setCreateTime(new Date());
 		scheduleJob.setStatus(ScheduleStatus.NORMAL.getValue());
 		insert(scheduleJob);
@@ -57,22 +56,22 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public void updateScheduleJob(SysScheduleJob scheduleJob) {
+	public void updateJob(SysScheduleJob scheduleJob) {
 		ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
 		updateById(scheduleJob);
 	}
 
 	@Override
-	public void deleteBatchScheduleJob(Long[] jobIds) {
+	public void deleteBatchJob(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.deleteScheduleJob(scheduler, jobId);
 		}
 		// 删除数据
-		deleteBatchIds(Arrays.asList(jobIds));
+		deleteBatchIds(jobIds);
 	}
 
 	@Override
-	public void updateBatchScheduleJob(Long[] jobIds, int status) {
+	public void updateBatchJob(List<Long> jobIds, int status) {
 		List<SysScheduleJob> scheduleJobs = selectList(Condition.instance().in("id", jobIds));
 		for (SysScheduleJob scheduleJob : scheduleJobs) {
 			scheduleJob.setStatus(status);
@@ -81,25 +80,25 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public void run(Long[] jobIds) {
+	public void run(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.run(scheduler, selectById(jobId));
 		}
 	}
 
 	@Override
-	public void pause(Long[] jobIds) {
+	public void pause(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.pauseJob(scheduler, jobId);
 		}
-		updateBatchScheduleJob(jobIds, ScheduleStatus.PAUSE.getValue());
+		updateBatchJob(jobIds, ScheduleStatus.PAUSE.getValue());
 	}
 
 	@Override
-	public void resume(Long[] jobIds) {
+	public void resume(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.resumeJob(scheduler, jobId);
 		}
-		updateBatchScheduleJob(jobIds, ScheduleStatus.NORMAL.getValue());
+		updateBatchJob(jobIds, ScheduleStatus.NORMAL.getValue());
 	}
 }

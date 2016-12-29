@@ -3,6 +3,8 @@ package com.advance.scaffold.service;
 import com.advance.scaffold.model.SysScheduleJob;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 定时任务 服务类
@@ -15,36 +17,51 @@ public interface SysScheduleJobService extends IService<SysScheduleJob> {
 
 	/**
 	 * 保存定时任务
+	 * 
+	 * @param scheduleJob
 	 */
-	void saveScheduleJob(SysScheduleJob scheduleJob);
+	void insertJob(SysScheduleJob scheduleJob);
 
 	/**
 	 * 更新定时任务
+	 * 
+	 * @param scheduleJob
 	 */
-	void updateScheduleJob(SysScheduleJob scheduleJob);
+	void updateJob(SysScheduleJob scheduleJob);
 
 	/**
 	 * 批量删除定时任务
+	 * 
+	 * @param jobIds
 	 */
-	void deleteBatchScheduleJob(Long[] jobIds);
+	void deleteBatchJob(List<Long> jobIds);
 
 	/**
 	 * 批量更新定时任务状态
+	 * 
+	 * @param jobIds
+	 * @param status
 	 */
-	void updateBatchScheduleJob(Long[] jobIds, int status);
+	void updateBatchJob(List<Long> jobIds, int status);
 
 	/**
 	 * 立即执行
+	 * 
+	 * @param jobIds
 	 */
-	void run(Long[] jobIds);
+	void run(List<Long> jobIds);
 
 	/**
 	 * 暂停运行
+	 * 
+	 * @param jobIds
 	 */
-	void pause(Long[] jobIds);
+	void pause(List<Long> jobIds);
 
 	/**
 	 * 恢复运行
+	 * 
+	 * @param jobIds
 	 */
-	void resume(Long[] jobIds);
+	void resume(List<Long> jobIds);
 }
