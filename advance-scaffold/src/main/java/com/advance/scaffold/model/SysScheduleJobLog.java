@@ -2,7 +2,6 @@ package com.advance.scaffold.model;
 
 import com.advance.scaffold.core.model.IdWorkBaseModel;
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 /**
  * <p>
@@ -17,12 +16,6 @@ public class SysScheduleJobLog extends IdWorkBaseModel {
 
     private static final long serialVersionUID = 1L;
 
-	/**
-	 * 任务日志id
-	 */
-	@TableId(value="log_id")
-
-	private Long logId;
 	/**
 	 * 任务id
 	 */
@@ -59,15 +52,6 @@ public class SysScheduleJobLog extends IdWorkBaseModel {
 	 */
 	@TableField(value="create_time")
 	private java.util.Date createTime;
-
-
-	public Long getLogId() {
-		return logId;
-	}
-
-	public void setLogId(Long logId) {
-		this.logId = logId;
-	}
 
 	public Long getJobId() {
 		return jobId;
