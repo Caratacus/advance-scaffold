@@ -2,7 +2,7 @@
 .gradle
 build/
 .idea
-/out
+/advance-scaffold/out/
 
 # Ignore Gradle GUI config
 gradle-app.setting
