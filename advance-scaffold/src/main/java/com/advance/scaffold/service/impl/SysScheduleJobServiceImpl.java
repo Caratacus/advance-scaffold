@@ -80,14 +80,14 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public void run(List<Long> jobIds) {
+	public void runJob(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.run(scheduler, selectById(jobId));
 		}
 	}
 
 	@Override
-	public void pause(List<Long> jobIds) {
+	public void pauseJob(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.pauseJob(scheduler, jobId);
 		}
@@ -95,7 +95,7 @@ public class SysScheduleJobServiceImpl extends ServiceImpl<SysScheduleJobMapper,
 	}
 
 	@Override
-	public void resume(List<Long> jobIds) {
+	public void resumeJob(List<Long> jobIds) {
 		for (Long jobId : jobIds) {
 			ScheduleUtils.resumeJob(scheduler, jobId);
 		}

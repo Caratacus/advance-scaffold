@@ -80,7 +80,7 @@ public class SysScheduleJobController extends ConsoleController {
 	 */
 	@RequestMapping("/run")
 	public Object run(@RequestBody List<Long> jobIds) {
-		sysScheduleJobService.run(jobIds);
+		sysScheduleJobService.runJob(jobIds);
 		return null;
 
 	}
@@ -90,7 +90,7 @@ public class SysScheduleJobController extends ConsoleController {
 	 */
 	@RequestMapping("/pause")
 	public Object pause(@RequestBody List<Long> jobIds) {
-		sysScheduleJobService.pause(jobIds);
+		sysScheduleJobService.pauseJob(jobIds);
 		return null;
 
 	}
@@ -100,7 +100,7 @@ public class SysScheduleJobController extends ConsoleController {
 	 */
 	@RequestMapping("/resume")
 	public Object resume(@RequestBody List<Long> jobIds) {
-		sysScheduleJobService.resume(jobIds);
+		sysScheduleJobService.resumeJob(jobIds);
 		return null;
 	}
 }

@@ -20,21 +20,21 @@ public interface SysScheduleJobService extends IService<SysScheduleJob> {
 	 * 
 	 * @param scheduleJob
 	 */
-	void insertJob(SysScheduleJob scheduleJob);
+	public void insertJob(SysScheduleJob scheduleJob);
 
 	/**
 	 * 更新定时任务
 	 * 
 	 * @param scheduleJob
 	 */
-	void updateJob(SysScheduleJob scheduleJob);
+	public void updateJob(SysScheduleJob scheduleJob);
 
 	/**
 	 * 批量删除定时任务
 	 * 
 	 * @param jobIds
 	 */
-	void deleteBatchJob(List<Long> jobIds);
+	public void deleteBatchJob(List<Long> jobIds);
 
 	/**
 	 * 批量更新定时任务状态
@@ -42,26 +42,26 @@ public interface SysScheduleJobService extends IService<SysScheduleJob> {
 	 * @param jobIds
 	 * @param status
 	 */
-	void updateBatchJob(List<Long> jobIds, int status);
+	public void updateBatchJob(List<Long> jobIds, int status);
 
 	/**
 	 * 立即执行
 	 * 
 	 * @param jobIds
 	 */
-	void run(List<Long> jobIds);
+	public void runJob(List<Long> jobIds);
 
 	/**
 	 * 暂停运行
 	 * 
 	 * @param jobIds
 	 */
-	void pause(List<Long> jobIds);
+	public void pauseJob(List<Long> jobIds);
 
 	/**
 	 * 恢复运行
 	 * 
 	 * @param jobIds
 	 */
-	void resume(List<Long> jobIds);
+	public void resumeJob(List<Long> jobIds);
 }
