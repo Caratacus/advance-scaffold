@@ -12,7 +12,7 @@
 		$('#resourceType').combobox('setValue', '${resource.resourceType}');
 
 		$('#pid').combotree({
-			url : '${root}/resource/allTree?flag=false',
+			url : '/resource/allTree?flag=false',
 			parentField : 'pid',
 			lines : true,
 			panelHeight : 'auto',

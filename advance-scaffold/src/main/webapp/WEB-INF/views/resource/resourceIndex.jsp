@@ -21,7 +21,7 @@
 	$(function() {
 		
 		treeGrid = $('#treeGrid').treegrid({
-			url : '${root}/resource/treeGrid',
+			url : '/resource/treeGrid',
 			idField : 'id',
 			treeField : 'name',
 			parentField : 'pid',
@@ -109,7 +109,7 @@
 				type: 2,
 				skin: 'layui-layer-rim', //加上边框
 				area: ['500px', '350px'], //宽高
-				content: '${root}/resource/editPage?id=' + node.id,
+				content: '/resource/editPage?id=' + node.id,
 				btn: ['确定'], //只是为了演示
 				yes: function(index,layero){
 
@@ -152,7 +152,7 @@
 			type: 2,
 			skin: 'layui-layer-rim', //加上边框
 			area: ['500px', '350px'], //宽高
-			content: '${root}/resource/addPage',
+			content: '/resource/addPage',
 			btn: ['确定'], //只是为了演示
 			yes: function(index,layero){
 

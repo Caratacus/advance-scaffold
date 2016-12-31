@@ -11,14 +11,14 @@
 		$(function() {
 
 			$('#pid').combotree({
-				url : '${root}/resource/allTree?flag=false',
+				url : '/resource/allTree?flag=false',
 				parentField : 'pid',
 				lines : true,
 				panelHeight : 'auto'
 			});
 
 			$('#resourceAddForm').form({
-				url : '${root}/resource/add',
+				url : '/resource/add',
 				onSubmit : function() {
 					progressLoad();
 					var isValid = $(this).form('validate');

@@ -4,7 +4,7 @@
 	var resourceTree;
 	$(function() {
 		resourceTree = $('#resourceTree').tree({
-			url : '${root}/resource/allTree?flag=true',
+			url : '/resource/allTree?flag=true',
 			parentField : 'pid',
 			lines : true,
 			checkbox : true,
@@ -12,7 +12,7 @@
 			},
 			onLoadSuccess : function(node, data) {
 				progressLoad();
-				$.post( '${root}/role/get', {
+				$.post( '/role/get', {
 					id : '${role.id}'
 				}, function(result) {
 					var ids;
@@ -33,7 +33,7 @@
 		});
 
 		$('#roleGrantForm').form({
-			url : '${root}/role/grant',
+			url : '/role/grant',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');

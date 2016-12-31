@@ -29,9 +29,9 @@ public class IndexController extends ConsoleController {
 	public String index() {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(GlobalConstant.SESSION_INFO);
 		if ((sessionInfo != null) && (sessionInfo.getId() != null)) {
-			return "/index";
+			return "index";
 		}
-		return "/login";
+		return "login";
 	}
 
 	@RequestMapping("/login")

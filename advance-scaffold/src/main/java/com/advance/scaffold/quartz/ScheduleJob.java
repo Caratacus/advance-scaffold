@@ -65,7 +65,7 @@ public class ScheduleJob extends QuartzJobBean {
 			scheduleJobLog.setTimes(TypeConvert.toInt(times));
 			// 任务状态 0：成功 1：失败
 			scheduleJobLog.setStatus(1);
-			scheduleJobLog.setError(e.toString().substring(0, 2000));
+			scheduleJobLog.setError(e.toString());
 		}
 		sysScheduleJobLogService.insert(scheduleJobLog);
 	}

@@ -24,7 +24,7 @@
 	var dataGrid;
 	$(function() {
 		dataGrid = $('#dataGrid').datagrid({
-			url : '${root}' + '/role/dataGrid',
+			url : '' + '/role/dataGrid',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
@@ -97,7 +97,7 @@
 			title : '添加',
 			width : 500,
 			height : 300,
-			href : '${root}/role/addPage',
+			href : '/role/addPage',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
@@ -119,7 +119,7 @@
 		parent.$.messager.confirm('询问', '您是否要删除当前角色？', function(b) {
 			if (b) {
 				progressLoad();
-				$.post('${root}/role/delete', {
+				$.post('/role/delete', {
 					id : id
 				}, function(result) {
 					if (result.success) {
@@ -143,7 +143,7 @@
 			title : '编辑',
 			width : 500,
 			height : 300,
-			href : '${root}/role/editPage?id=' + id,
+			href : '/role/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
 				handler : function() {
@@ -167,7 +167,7 @@
 			title : '授权',
 			width : 500,
 			height : 500,
-			href : '${root}/role/grantPage?id=' + id,
+			href : '/role/grantPage?id=' + id,
 			buttons : [ {
 				text : '授权',
 				handler : function() {

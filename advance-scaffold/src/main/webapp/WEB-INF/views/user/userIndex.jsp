@@ -20,7 +20,7 @@
         var dataGrid;
         $(function () {
             dataGrid = $('#dataGrid').datagrid({
-                url: '${root}/user/dataGrid',
+                url: '/user/dataGrid',
                 fit: true,
                 striped: true,
                 rownumbers: true,
@@ -140,7 +140,7 @@
                 title: '添加',
                 width: 500,
                 height: 300,
-                href: '${root}/user/addPage',
+                href: '/user/addPage',
                 buttons: [{
                     text: '添加',
                     handler: function () {
@@ -165,7 +165,7 @@
                     /*当前登录用户的ID*/
                     if (currentUserId != id) {
                         progressLoad();
-                        $.post('${root}/user/delete', {
+                        $.post('/user/delete', {
                             id: id
                         }, function (result) {
                             if (result.success) {
@@ -195,7 +195,7 @@
                 title: '编辑',
                 width: 500,
                 height: 350,
-                href: '${root}/user/editPage?id=' + id,
+                href: '/user/editPage?id=' + id,
                 buttons: [{
                     text: '编辑',
                     handler: function () {

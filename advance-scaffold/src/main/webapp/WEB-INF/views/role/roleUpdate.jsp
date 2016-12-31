@@ -4,7 +4,7 @@
 	$(function() {
 		
 		$('#roleEditForm').form({
-			url : '${root}/role/edit',
+			url : '/role/edit',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');

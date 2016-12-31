@@ -6,14 +6,14 @@
     $(function () {
 
         $('#roleIds').combotree({
-            url: '${root}/role/tree',
+            url: '/role/tree',
             multiple: true,
             required: true,
             panelHeight: 'auto'
         });
 
         $('#userAddForm').form({
-            url: '${root}/user/add',
+            url: '/user/add',
             onSubmit: function () {
                 progressLoad();
                 var isValid = $(this).form('validate');

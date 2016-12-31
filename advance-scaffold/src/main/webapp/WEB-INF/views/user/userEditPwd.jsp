@@ -4,7 +4,7 @@
 	$(function() {
 
 		$('#editUserPwdForm').form({
-			url : '${root}/user/editUserPwd',
+			url : '/user/editUserPwd',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -32,7 +32,7 @@
 			<div>登录已超时，请重新登录.</div>
 			<script type="text/javascript" charset="utf-8">
 				try {
-					window.location.href='${root}/welcome/index';
+					window.location.href='/welcome/index';
 				} catch (e) {
 				}
 			</script>

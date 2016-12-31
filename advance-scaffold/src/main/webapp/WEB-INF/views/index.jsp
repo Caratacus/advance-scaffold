@@ -3,7 +3,7 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/views/common/include.jsp" %>
-    <script type="text/javascript" src="${root}/static/jslib/custom/index.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/jslib/custom/index.js" charset="utf-8"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>主页</title>
     <script type="text/javascript">
@@ -15,9 +15,9 @@
 
         var sessionInfo_userId = '${sessionInfo.id}';
         if (sessionInfo_userId) {//如果没有登录,直接跳转到登录页面
-            layout_west_tree_url = '${root}/resource/tree';
+            layout_west_tree_url = '/resource/tree';
         } else {
-            window.location.href = '${root}/welcome/index';
+            window.location.href = '/welcome/index';
         }
         $(function () {
             index_layout = $('#index_layout').layout({
@@ -56,7 +56,7 @@
                 lines: true,
                 onClick: function (node) {
                     if (node.attributes && node.attributes.url) {
-                        var url = '${root}' + node.attributes.url;
+                        var url = '' + node.attributes.url;
                         addTab({
                             url: url,
                             title: node.text,
@@ -92,10 +92,10 @@
                 btn: ['确定', '取消'] //按钮
             }, function () {
                 progressLoad();
-                $.post('${root}/welcome/logout', function (result) {
+                $.post('/welcome/logout', function (result) {
                     if (result.success) {
                         progressClose();
-                        window.location.href = '${root}/welcome/index';
+                        window.location.href = '/welcome/index';
                     }
                 }, 'json');
             });
@@ -107,7 +107,7 @@
                 title: '修改密码',
                 width: 300,
                 height: 250,
-                href: '${root}/user/editPwdPage',
+                href: '/user/editPwdPage',
                 buttons: [{
                     text: '修改',
                     handler: function () {
@@ -123,7 +123,7 @@
 <body>
 <div id="loading"
      style="position: fixed;top: -50%;left: -50%;width: 200%;height: 200%;background: #fff;z-index: 100;overflow: hidden;">
-    <img src="${root}/static/style/images/ajax-loader.gif"
+    <img src="/static/style/images/ajax-loader.gif"
          style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;"/>
 </div>
 <div id="index_layout">
@@ -136,7 +136,7 @@
                 <h1 class="app-logo" data-init="config['system.appname']">Web+</h1>
             </div>
             <ul style="float:left;">
-                <li><a href="${root}/welcome/index" target="_blank" title="查看前台主页"><i class="fa fa-home"></i> 回首页</a>
+                <li><a href="/welcome/index" target="_blank" title="查看前台主页"><i class="fa fa-home"></i> 回首页</a>
                 </li>
                 <%--<li><a href="javascript:void(0);" id="fullscreen" title="全屏" onclick="$(document).toggleFullScreen();" style=""><i class="fa fa-expand"></i></a></li>--%>
             </ul>

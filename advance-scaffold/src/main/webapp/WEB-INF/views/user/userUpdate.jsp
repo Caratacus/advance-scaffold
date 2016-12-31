@@ -4,7 +4,7 @@
     $(function () {
 
         $('#userEditForm').form({
-            url: '${root}/user/edit',
+            url: '/user/edit',
             onSubmit: function () {
                 progressLoad();
                 var isValid = $(this).form('validate');
