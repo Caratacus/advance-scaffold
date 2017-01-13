@@ -4,7 +4,7 @@
 <Configuration status="off" monitorInterval="600">
     <properties>
         <!--通用变量-->
-        <property name="LOG_HOME">/home/wwwroot/logs/scaffold</property>
+        <property name="LOG_HOME">/develop/logs/scaffold</property>
         <property name="ERROR_LOG_FILE_NAME">error</property>
         <property name="INFO_LOG_FILE_NAME">info</property>
     </properties>
