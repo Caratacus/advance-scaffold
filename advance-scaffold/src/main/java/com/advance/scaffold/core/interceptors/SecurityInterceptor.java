@@ -1,7 +1,7 @@
 package com.advance.scaffold.core.interceptors;
 
 import com.advance.scaffold.core.constant.GlobalConstant;
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.app.common.TypeConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	/*
-	 *不需要拦截的资源
+	 * 不需要拦截的资源
 	 */
 	private List<String> excludeUrls;
 
@@ -64,7 +64,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		if (handler instanceof ResourceHttpRequestHandler) {
 			return true;
 		}
-		SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_SESSION);
 		String servletPath = TypeConvert.toString(request.getServletPath());
 		logger.info("requestPath:" + request.getServletPath());
 		// 不需要校验权限的路径

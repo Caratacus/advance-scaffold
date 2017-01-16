@@ -1,23 +1,21 @@
 package com.advance.scaffold.controller;
 
-import java.util.Date;
-import java.util.List;
-
 import com.advance.scaffold.core.constant.GlobalConstant;
 import com.advance.scaffold.core.controller.ConsoleController;
 import com.advance.scaffold.core.model.Json;
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.Tree;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
+import com.app.common.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.app.common.Common;
-import com.advance.scaffold.core.model.Tree;
-
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/resource")
@@ -34,7 +32,7 @@ public class SysResourceController extends ConsoleController {
 	@RequestMapping("/tree")
 	@ResponseBody
 	public void tree() {
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(GlobalConstant.SESSION_INFO);
+		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_SESSION);
 		this.printJson(sysResourceService.tree(sessionInfo));
 	}
 

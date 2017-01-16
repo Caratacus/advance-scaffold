@@ -1,11 +1,11 @@
 package com.advance.scaffold.service;
 
-import java.util.List;
-
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysUser;
-import com.baomidou.mybatisplus.service.IService;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  *
@@ -29,7 +29,7 @@ public interface SysUserService extends IService<SysUser> {
 	 */
 	Page<SysUser> getUsers(Page page);
 
-	public boolean editUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd);
+	public boolean editUserPwd(UserSessionInfo sessionInfo, String oldPwd, String pwd);
 
 	public List<String> listResource(Long id);
 

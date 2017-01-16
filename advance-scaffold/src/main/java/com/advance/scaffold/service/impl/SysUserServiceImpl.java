@@ -4,7 +4,7 @@ import com.app.common.StringUtils;
 import com.app.common.TypeConvert;
 import com.app.common.aes.MD5Util;
 import com.advance.scaffold.core.constant.GlobalConstant;
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysUser;
 import com.advance.scaffold.model.SysUserRole;
 import com.advance.scaffold.mapper.SysUserMapper;
@@ -34,20 +34,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 	@Override
 	public SysUser login(SysUser user) {
-		user.setPassword(MD5Util.md5(user.getPassword()));
-		SysUser sysUser = this.selectOne(new EntityWrapper<SysUser>(user));
-		return sysUser;
+		return selectOne(new EntityWrapper<SysUser>(user));
 	}
 
 	@Override
 	public Page<SysUser> getUsers(Page page) {
-		List<SysUser> users = sysUserMapper.getUsers(page,page.getCondition());
+		List<SysUser> users = sysUserMapper.getUsers(page, page.getCondition());
 		page.setRecords(users);
 		return page;
 	}
 
 	@Override
-	public boolean editUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd) {
+	public boolean editUserPwd(UserSessionInfo sessionInfo, String oldPwd, String pwd) {
 
 		SysUser sysUser = this.selectById(sessionInfo.getId());
 		if (sysUser.getPassword().equalsIgnoreCase(MD5Util.md5(oldPwd))) {// 说明原密码输入正确

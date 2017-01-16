@@ -1,12 +1,11 @@
 package com.advance.scaffold.service.impl;
 
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.mapper.SysResourceMapper;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
 import com.advance.scaffold.core.model.Tree;
 import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	private SysResourceMapper sysResourceMapper;
 
 	@Override
-	public List<Tree> tree(SessionInfo sessionInfo) {
+	public List<Tree> tree(UserSessionInfo sessionInfo) {
 		List<SysResource> sysResources = null;
 		List<Tree> trees = new ArrayList<Tree>();
 

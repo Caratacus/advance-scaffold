@@ -2,7 +2,7 @@ package com.advance.scaffold.core.model;
 
 import java.util.List;
 
-public class SessionInfo implements java.io.Serializable {
+public class UserSessionInfo implements java.io.Serializable {
 
 	private Long id;// 用户ID
 	private String loginname;// 登录名
@@ -10,7 +10,7 @@ public class SessionInfo implements java.io.Serializable {
 	private String ip;// 用户IP
 
 	private List<String> resourceList;// 用户可以访问的资源地址列表
-	
+
 	private List<String> resourceAllList;
 
 	public List<String> getResourceList() {
@@ -52,7 +52,7 @@ public class SessionInfo implements java.io.Serializable {
 	public void setLoginname(String loginname) {
 		this.loginname = loginname;
 	}
-	
+
 	public List<String> getResourceAllList() {
 		return resourceAllList;
 	}

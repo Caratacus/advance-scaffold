@@ -1,7 +1,7 @@
 package com.advance.scaffold.controller;
 
 import com.advance.scaffold.core.model.Json;
-import com.advance.scaffold.core.model.SessionInfo;
+import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +54,7 @@ public class SysUserController extends ConsoleController {
 	@RequestMapping("/editUserPwd")
 	@ResponseBody
 	public void editUserPwd(String oldPwd, String pwd) {
-		SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_SESSION);
 		Json json = new Json();
 		try {
 			boolean pwdflag = sysUserService.editUserPwd(sessionInfo, oldPwd, pwd);
