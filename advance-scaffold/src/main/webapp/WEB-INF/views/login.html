@@ -2,7 +2,6 @@
 <html>
 <#include "/common/include.html" />
 <head>
-    <link rel="stylesheet" href="/static/style/css/login.css" type="text/css">
     <title>登录页面</title>
 </head>
 
@@ -35,6 +34,7 @@
 </form>
 </body>
 <script type="text/javascript">
+    $ = layui.jquery;
     //得到焦点
     $("#password").focus(function () {
         $("#left_hand").animate({
