@@ -37,8 +37,6 @@
 </form>
 </body>
 <script type="text/javascript">
-
-    $ = layui.jquery;
     layui.use(['form'],
         function () {
             var form = layui.form(),
@@ -47,17 +45,15 @@
             form.on('submit(login)',
                 function (data) {
                     $.post('/welcome/login', data.field, function (text) {
-                        var data = $.parseJSON(text);
-                        if (data.status === 200) {
+                        if (text.status === 200) {
                             location.href = "/welcome/index";
                         }
-                        layer.msg(data.msg);
-                    });
+                        layer.msg(text.msg);
+                    }, 'json');
                     return false;
                 });
 
         });
-
     //得到焦点
     $("#password").focus(function () {
         $("#left_hand").animate({

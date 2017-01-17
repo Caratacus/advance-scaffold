@@ -15,11 +15,6 @@
         <meta name="format-detection" content="telephone=no">
     </head>
     <body>
-    <script>
-        layui.use(['layer', 'form'], function(){
-            var layer = layui.layer,form = layui.form();
-        });
-    </script>
         <div class="layui-layout layui-layout-admin">
             <div class="layui-header header header-demo">
                 <div class="layui-main">
@@ -359,11 +354,9 @@
             layer.confirm('确定要退出?', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                progressLoad();
                 $.post('/welcome/logout', function (result) {
-                    if (result.status == 200) {
-                        progressClose();
-                        window.location.href = '${root}/welcome/index';
+                    if (result.status === 200) {
+                        location.href = '/welcome/index';
                     }
                 }, 'json');
             });
