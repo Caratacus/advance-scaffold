@@ -87,5 +87,9 @@ public class IndexController extends ConsoleController {
 		json.setMsg("注销成功！");
 		this.printJson(json);
 	}
+	@RequestMapping("/view")
+	public String welcome() {
+		return "welcome";
+	}
 
 }
