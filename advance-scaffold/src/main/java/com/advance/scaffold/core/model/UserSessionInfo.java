@@ -5,7 +5,7 @@ import java.util.List;
 public class UserSessionInfo implements java.io.Serializable {
 
 	private Long id;// 用户ID
-	private String loginname;// 登录名
+	private String loginName;// 登录名
 	private String name;// 姓名
 	private String ip;// 用户IP
 
@@ -41,16 +41,16 @@ public class UserSessionInfo implements java.io.Serializable {
 		return id;
 	}
 
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getLoginname() {
-		return loginname;
-	}
-
-	public void setLoginname(String loginname) {
-		this.loginname = loginname;
 	}
 
 	public List<String> getResourceAllList() {

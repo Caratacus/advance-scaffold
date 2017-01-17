@@ -1,15 +1,7 @@
 package com.advance.scaffold.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.advance.scaffold.core.constant.GlobalConstant;
 import com.advance.scaffold.core.controller.ConsoleController;
-import com.advance.scaffold.core.model.Json;
 import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysUser;
 import com.advance.scaffold.service.SysResourceService;
@@ -17,6 +9,12 @@ import com.advance.scaffold.service.SysUserService;
 import com.app.common.Common;
 import com.app.common.aes.MD5Util;
 import com.app.common.base.model.RestResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.advance.scaffold.core.constant.ErrorCode.x10001;
 import static com.advance.scaffold.core.constant.ErrorCode.x10002;
@@ -54,10 +52,9 @@ public class IndexController extends ConsoleController {
 			sysUser = sysUserService.login(sysUser);
 			if (sysUser != null) {
 				if (sysUser.getState() == 0) {
-					result.setMsg("登录成功!");
 					UserSessionInfo sessionInfo = new UserSessionInfo();
 					sessionInfo.setId(sysUser.getId());
-					sessionInfo.setLoginname(sysUser.getLoginName());
+					sessionInfo.setLoginName(sysUser.getLoginName());
 					sessionInfo.setName(sysUser.getName());
 					sessionInfo.setResourceList(sysUserService.listResource(sysUser.getId()));
 					sessionInfo.setResourceAllList(sysResourceService.listAllResource());
@@ -79,13 +76,12 @@ public class IndexController extends ConsoleController {
 	@RequestMapping("/logout")
 	@ResponseBody
 	public void logout() {
-		Json json = new Json();
+		RestResult result = emptyRestMap;
 		if (session != null) {
 			session.invalidate();
 		}
-		json.setSuccess(true);
-		json.setMsg("注销成功！");
-		this.printJson(json);
+		result.setMsg("注销成功！");
+		this.printJson(result);
 	}
 	@RequestMapping("/view")
 	public String welcome() {
