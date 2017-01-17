@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -31,9 +30,6 @@ import java.util.Map;
 public class ConsoleController extends SuperController implements HandlerInterceptor {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-	protected final RestResult emptyRestMap = RestResult.success(Collections.emptyMap());
-	protected final RestResult emptyRestList = RestResult.success(Collections.emptyList());
 
 	private final TypeReference<Map<String, Object>> mapType = new TypeReference<Map<String, Object>>() {
 	};
@@ -159,8 +155,8 @@ public class ConsoleController extends SuperController implements HandlerInterce
 	 * @date 2016/8/26 0026
 	 * @version 1.0
 	 */
-	protected RestResult failRest(HttpStatus status, ErrorCode errorCode, Boolean isShow) {
-		return RestUtils.failResult(response, status, errorCode, isShow);
+	protected RestResult failRest(RestResult result, HttpStatus status, ErrorCode errorCode, Boolean isShow) {
+		return RestUtils.failResult(result, response, status, errorCode, isShow);
 	}
 
 	/**
@@ -174,8 +170,8 @@ public class ConsoleController extends SuperController implements HandlerInterce
 	 * @date 2016/8/26 0026
 	 * @version 1.0
 	 */
-	protected RestResult failRest(HttpStatus status, ErrorCode errorCode) {
-		return RestUtils.failResult(response, status, errorCode, true);
+	protected RestResult failRest(RestResult result, HttpStatus status, ErrorCode errorCode) {
+		return RestUtils.failResult(result, response, status, errorCode, true);
 	}
 
 	/**
@@ -192,8 +188,8 @@ public class ConsoleController extends SuperController implements HandlerInterce
 	 * @date 2016/8/26 0026
 	 * @version 1.0
 	 */
-	protected RestResult failRest(HttpStatus status, ErrorCode errorCode, Exception exception, Boolean isShow) {
-		return RestUtils.failResult(response, status, errorCode, exception, isShow);
+	protected RestResult failRest(RestResult result, HttpStatus status, ErrorCode errorCode, Exception exception, Boolean isShow) {
+		return RestUtils.failResult(result, response, status, errorCode, exception, isShow);
 	}
 
 	/**
@@ -208,8 +204,8 @@ public class ConsoleController extends SuperController implements HandlerInterce
 	 * @date 2016/8/26 0026
 	 * @version 1.0
 	 */
-	protected RestResult failRest(HttpStatus status, ErrorCode errorCode, Exception exception) {
-		return RestUtils.failResult(response, status, errorCode, exception, true);
+	protected RestResult failRest(RestResult result, HttpStatus status, ErrorCode errorCode, Exception exception) {
+		return RestUtils.failResult(result, response, status, errorCode, exception, true);
 	}
 
 	/**
@@ -285,4 +281,21 @@ public class ConsoleController extends SuperController implements HandlerInterce
 		return RestHelper.getParams(request);
 	}
 
+	/**
+	 * 获取一个新的RestResult
+	 *
+	 * @return
+	 */
+	protected RestResult restMap() {
+		return RestHelper.restMap();
+	}
+
+	/**
+	 * 获取一个新的RestResult
+	 *
+	 * @return
+	 */
+	protected RestResult restList() {
+		return RestHelper.restList();
+	}
 }

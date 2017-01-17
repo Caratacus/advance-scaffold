@@ -44,7 +44,7 @@ public class IndexController extends ConsoleController {
 	@PostMapping("/login")
 	@ResponseBody
 	public void login(@RequestParam("loginName") String loginName, @RequestParam("password") String password) throws Exception {
-		RestResult result = emptyRestMap;
+		RestResult result = restMap();
 		try {
 			SysUser sysUser = new SysUser();
 			sysUser.setLoginName(loginName);
@@ -60,13 +60,13 @@ public class IndexController extends ConsoleController {
 					sessionInfo.setResourceAllList(sysResourceService.listAllResource());
 					session.setAttribute(GlobalConstant.USER_SESSION, sessionInfo);
 				} else {
-					result = failRest(BAD_REQUEST, x10002);
+					result = failRest(result, BAD_REQUEST, x10002);
 				}
 			} else {
-				result = failRest(BAD_REQUEST, x10001);
+				result = failRest(result, BAD_REQUEST, x10001);
 			}
 		} catch (Exception e) {
-			result = failRest(INTERNAL_SERVER_ERROR, x10003);
+			result = failRest(result, INTERNAL_SERVER_ERROR, x10003);
 			logger.error(Common.method(), e);
 		}
 		this.printJson(result);
@@ -76,13 +76,14 @@ public class IndexController extends ConsoleController {
 	@RequestMapping("/logout")
 	@ResponseBody
 	public void logout() {
-		RestResult result = emptyRestMap;
+		RestResult result = restMap();
 		if (session != null) {
 			session.invalidate();
 		}
 		result.setMsg("注销成功！");
 		this.printJson(result);
 	}
+
 	@RequestMapping("/view")
 	public String welcome() {
 		return "welcome";

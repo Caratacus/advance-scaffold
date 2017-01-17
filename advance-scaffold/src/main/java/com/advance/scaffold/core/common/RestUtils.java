@@ -51,18 +51,20 @@ public class RestUtils {
 	 *            是否展示
 	 * @return RestWrong
 	 */
-	public static RestResult failResult(HttpServletResponse response, HttpStatus status, ErrorCode errorCode,
-                                        Exception exception, Boolean isShow) {
+	public static RestResult failResult(RestResult restResult, HttpServletResponse response, HttpStatus status,
+										ErrorCode errorCode, Exception exception, Boolean isShow) {
 		//response.setStatus(status.value());
 		String code = errorCode.code();
-		RestResult restWrong = new RestResult();
-		restWrong.setError(code);
-		restWrong.setMsg(errorCode.desc());
-		restWrong.setException(ObjectUtils.isEmpty(exception) ? null : exception.toString());
-		restWrong.setShow(isShow);
-		restWrong.setStatus(status.value());
-		restWrong.setTimestamp(System.currentTimeMillis());
-		return restWrong;
+		if (restResult == null) {
+			restResult = new RestResult();
+		}
+		restResult.setError(code);
+		restResult.setMsg(errorCode.desc());
+		restResult.setException(ObjectUtils.isEmpty(exception) ? null : exception.toString());
+		restResult.setShow(isShow);
+		restResult.setStatus(status.value());
+		restResult.setTimestamp(System.currentTimeMillis());
+		return restResult;
 	}
 
 	/**
@@ -75,8 +77,9 @@ public class RestUtils {
 	 *            是否展示
 	 * @return RestWrong
 	 */
-	public static RestResult failResult(HttpServletResponse response, HttpStatus status, ErrorCode error, Boolean isShow) {
-		return failResult(response, status, error, null, isShow);
+	public static RestResult failResult(RestResult result, HttpServletResponse response, HttpStatus status, ErrorCode error,
+										Boolean isShow) {
+		return failResult(result, response, status, error, null, isShow);
 	}
 
 }
