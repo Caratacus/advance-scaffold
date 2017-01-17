@@ -36,7 +36,6 @@ layui.use(['element'], function(){
   	element.on('nav(side)', function(elem){
     	title = elem.find('cite').text();
     	url = elem.find('a').attr('_href');
-    	// alert(url);
 
     	for (var i = 0; i <$('.x-iframe').length; i++) {
     		if($('.x-iframe').eq(i).attr('src')==url){
@@ -44,7 +43,6 @@ layui.use(['element'], function(){
     			return;
     		}
     	};
-
     	res = element.tabAdd('x-tab', {
 	        title: title//用于演示
 	        ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe"></iframe>'
@@ -57,3 +55,11 @@ layui.use(['element'], function(){
   });
 });
 
+/**
+ * 睡眠方法
+ * @param n
+ */
+function sleep(n) { //n表示的毫秒数
+    var start = new Date().getTime();
+    while (true) if (new Date().getTime() - start > n) break;
+}

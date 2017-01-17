@@ -32,7 +32,7 @@ public class SysResourceController extends ConsoleController {
 	@RequestMapping("/tree")
 	@ResponseBody
 	public void tree() {
-		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_SESSION);
+		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_INFO);
 		this.printJson(sysResourceService.tree(sessionInfo));
 	}
 

@@ -14,9 +14,17 @@
 	<!--获取该用户权限列表-->
 	<select id="getResourceList" resultType="SysResource" parameterType="java.util.HashMap">
 		SELECT DISTINCT
-		<include refid="Base_Column_List2" />
+            re.id,
+            re.`name`,
+            re.url,
+            re.description,
+            re.icon,
+            re.pid,
+            re.state,
+            re.resource_type AS resourceType,
+            re.create_time AS createTime
 		FROM
-		sys_resource re
+		    sys_resource re
 		INNER JOIN sys_role_resource rore ON re.id = rore.resource_id
 		INNER JOIN sys_user_role uro ON rore.role_id = uro.role_id
 		<where>

@@ -34,7 +34,7 @@ public class IndexController extends ConsoleController {
 
 	@RequestMapping("/index")
 	public String index() {
-		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_SESSION);
+		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_INFO);
 		if ((sessionInfo != null) && (sessionInfo.getId() != null)) {
 			return "index";
 		}
@@ -58,7 +58,7 @@ public class IndexController extends ConsoleController {
 					sessionInfo.setName(sysUser.getName());
 					sessionInfo.setResourceList(sysUserService.listResource(sysUser.getId()));
 					sessionInfo.setResourceAllList(sysResourceService.listAllResource());
-					session.setAttribute(GlobalConstant.USER_SESSION, sessionInfo);
+					session.setAttribute(GlobalConstant.USER_INFO, sessionInfo);
 				} else {
 					result = failRest(result, BAD_REQUEST, x10002);
 				}

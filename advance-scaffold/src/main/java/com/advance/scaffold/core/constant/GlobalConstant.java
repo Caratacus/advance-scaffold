@@ -2,7 +2,7 @@ package com.advance.scaffold.core.constant;
 
 public class GlobalConstant {
 
-	public static final String USER_SESSION = "userSession";
+	public static final String USER_INFO = "userInfo";
 
 	public static final Integer ENABLE = 0; // 启用
 	public static final Integer DISABLE = 1; // 禁用

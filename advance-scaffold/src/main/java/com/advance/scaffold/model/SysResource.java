@@ -14,9 +14,6 @@ import java.util.Date;
 @TableName("sys_resource")
 public class SysResource extends AutoBaseModel {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
-
 	private String name;
 
 	private String url;
@@ -35,9 +32,6 @@ public class SysResource extends AutoBaseModel {
 
 	@TableField(value = "create_time")
 	private Date createTime;
-
-	@TableField(exist = false)
-	private String iconCls;
 
 	public String getName() {
 		return this.name;
@@ -103,11 +97,4 @@ public class SysResource extends AutoBaseModel {
 		this.createTime = createTime;
 	}
 
-	public String getIconCls() {
-		return iconCls;
-	}
-
-	public void setIconCls(String iconCls) {
-		this.iconCls = iconCls;
-	}
 }

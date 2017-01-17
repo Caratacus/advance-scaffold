@@ -54,7 +54,7 @@ public class SysUserController extends ConsoleController {
 	@RequestMapping("/editUserPwd")
 	@ResponseBody
 	public void editUserPwd(String oldPwd, String pwd) {
-		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_SESSION);
+		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_INFO);
 		Json json = new Json();
 		try {
 			boolean pwdflag = sysUserService.editUserPwd(sessionInfo, oldPwd, pwd);

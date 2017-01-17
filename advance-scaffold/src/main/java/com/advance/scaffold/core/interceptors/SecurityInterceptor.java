@@ -64,7 +64,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		if (handler instanceof ResourceHttpRequestHandler) {
 			return true;
 		}
-		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_SESSION);
+		UserSessionInfo sessionInfo = (UserSessionInfo) request.getSession().getAttribute(GlobalConstant.USER_INFO);
 		String servletPath = TypeConvert.toString(request.getServletPath());
 		logger.info("requestPath:" + request.getServletPath());
 		// 不需要校验权限的路径
