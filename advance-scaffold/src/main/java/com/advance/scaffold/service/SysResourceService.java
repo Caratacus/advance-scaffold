@@ -1,7 +1,7 @@
 package com.advance.scaffold.service;
 
 import com.advance.scaffold.core.model.Tree;
-import com.advance.scaffold.core.model.UserSessionInfo;
+import com.advance.scaffold.core.model.TreeResource;
 import com.advance.scaffold.model.SysResource;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -14,7 +14,13 @@ import java.util.List;
  */
 public interface SysResourceService extends IService<SysResource> {
 
-	public List<Tree> tree(UserSessionInfo sessionInfo);
+	/**
+	 * 根据用户ID获取树行列表
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<TreeResource> treeResources(Long userId);
 
 	public List<Tree> listAllTree(boolean flag);
 

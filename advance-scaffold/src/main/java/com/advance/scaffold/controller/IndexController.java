@@ -36,6 +36,7 @@ public class IndexController extends ConsoleController {
 	public String index() {
 		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_INFO);
 		if ((sessionInfo != null) && (sessionInfo.getId() != null)) {
+			request.setAttribute("trees", sysResourceService.treeResources(sessionInfo.getId()));
 			return "index";
 		}
 		return "login";

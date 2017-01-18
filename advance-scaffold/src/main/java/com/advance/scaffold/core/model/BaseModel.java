@@ -22,7 +22,7 @@ public class BaseModel implements Serializable {
 			T t = clazz.newInstance();
 			return BeanConverter.convert(t, this);
 		} catch (Exception e) {
-			throw new RuntimeException("Error: Unexpected exception on getTargetObject", e);
+			throw new RuntimeException("Error: Unexpected exception on convert", e);
 		}
 	}
 }

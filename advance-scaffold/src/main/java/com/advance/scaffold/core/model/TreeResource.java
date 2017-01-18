@@ -1,18 +1,14 @@
-package com.advance.scaffold.model;
-
-import com.advance.scaffold.core.model.AutoBaseModel;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+package com.advance.scaffold.core.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * 资源
  *
  */
-@TableName("sys_resource")
-public class SysResource extends AutoBaseModel {
+public class TreeResource extends AutoBaseModel {
 
 	private String name;
 
@@ -24,14 +20,13 @@ public class SysResource extends AutoBaseModel {
 
 	private Integer pid;
 
-	@TableField(value = "state")
 	private Integer state;
 
-	@TableField(value = "resource_type")
 	private Integer resourceType;
 
-	@TableField(value = "create_time")
 	private Date createTime;
+
+	private List<TreeResource> childrens;
 
 	public String getName() {
 		return this.name;
@@ -97,4 +92,11 @@ public class SysResource extends AutoBaseModel {
 		this.createTime = createTime;
 	}
 
+	public List<TreeResource> getChildrens() {
+		return childrens;
+	}
+
+	public void setChildrens(List<TreeResource> childrens) {
+		this.childrens = childrens;
+	}
 }

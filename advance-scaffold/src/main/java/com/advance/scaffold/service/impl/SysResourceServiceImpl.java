@@ -1,10 +1,11 @@
 package com.advance.scaffold.service.impl;
 
-import com.advance.scaffold.core.model.UserSessionInfo;
+import com.advance.scaffold.core.model.Tree;
+import com.advance.scaffold.core.model.TreeResource;
 import com.advance.scaffold.mapper.SysResourceMapper;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
-import com.advance.scaffold.core.model.Tree;
+import com.app.common.CollectionUtils;
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,41 +27,18 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	private SysResourceMapper sysResourceMapper;
 
 	@Override
-	public List<Tree> tree(UserSessionInfo sessionInfo) {
-		List<SysResource> sysResources = null;
-		List<Tree> trees = new ArrayList<Tree>();
-
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("resourcetype", 0);// 菜单类型的资源
-
-		if (sessionInfo != null) {
-			params.put("userId", sessionInfo.getId());// 自查自己有权限的资源
-			sysResources = sysResourceMapper.getResourceList(params);
-		} else {
-			return null;
-		}
-
-		if ((sysResources != null) && (sysResources.size() > 0)) {
-			for (SysResource sysResource : sysResources) {
-				Tree tree = new Tree();
-				tree.setId(sysResource.getId().toString());
-				if (sysResource.getPid() != null) {
-					tree.setPid(sysResource.getPid().toString());
-				} else {
-					tree.setState("closed");
-				}
-				tree.setText(sysResource.getName());
-				tree.setIconCls(sysResource.getIcon());
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("url", sysResource.getUrl());
-				tree.setAttributes(map);
-				trees.add(tree);
+	public List<TreeResource> treeResources(Long userId) {
+		List<TreeResource> treeResources = sysResourceMapper.selectTreeResources(Condition.instance().eq("sr.state",0).eq("sur.user_id",userId).isNull("sr.pid"));
+		if (CollectionUtils.isNotEmpty(treeResources)) {
+			for (TreeResource treeResource : treeResources) {
+				List<TreeResource> resources = sysResourceMapper.selectTreeResources(Condition.instance().eq("sr.state",0).eq("sur.user_id",userId).eq("sr.pid",treeResource.getId()));
+				treeResource.setChildrens(resources);
 			}
 		}
-		return trees;
+		return treeResources;
 	}
 
-	@Override
+    @Override
 	public List<Tree> listAllTree(boolean flag) {
 
 		List<SysResource> l = null;

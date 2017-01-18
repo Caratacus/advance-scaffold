@@ -11,6 +11,9 @@ import java.io.Serializable;
  */
 @JsonFilter("objFilter")
 public class IdWorkBaseModel extends IdWorkPrimaryKey implements Serializable {
+
+	private static final long serialVersionUID = 2787925096383174818L;
+
 	/**
 	 * 获取自动转换后的JavaBean对象
 	 *
@@ -18,12 +21,12 @@ public class IdWorkBaseModel extends IdWorkPrimaryKey implements Serializable {
 	 * @param <T>
 	 * @return
 	 */
-	public <T> T getTargetObject(Class<T> clazz) {
+	public <T> T convert(Class<T> clazz) {
 		try {
 			T t = clazz.newInstance();
 			return BeanConverter.convert(t, this);
 		} catch (Exception e) {
-			throw new RuntimeException("Error: Unexpected exception on getTargetObject", e);
+			throw new RuntimeException("Error: Unexpected exception on convert", e);
 		}
 	}
 }

@@ -18,12 +18,12 @@ public class AutoBaseModel extends AutoPrimaryKey implements Serializable {
 	 * @param <T>
 	 * @return
 	 */
-	public <T> T getTargetObject(Class<T> clazz) {
+	public <T> T convert(Class<T> clazz) {
 		try {
 			T t = clazz.newInstance();
 			return BeanConverter.convert(t, this);
 		} catch (Exception e) {
-			throw new RuntimeException("Error: Unexpected exception on getTargetObject", e);
+			throw new RuntimeException("Error: Unexpected exception on convert", e);
 		}
 	}
 }

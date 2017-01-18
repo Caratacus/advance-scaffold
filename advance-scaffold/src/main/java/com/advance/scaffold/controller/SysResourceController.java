@@ -8,6 +8,7 @@ import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
 import com.app.common.Common;
+import com.app.common.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,8 @@ public class SysResourceController extends ConsoleController {
 	@ResponseBody
 	public void tree() {
 		UserSessionInfo sessionInfo = (UserSessionInfo) session.getAttribute(GlobalConstant.USER_INFO);
-		this.printJson(sysResourceService.tree(sessionInfo));
+		request.setAttribute("trees", sysResourceService.treeResources(sessionInfo.getId()));
+		System.out.println(JsonUtils.toJson(sysResourceService.treeResources(sessionInfo.getId())));
 	}
 
 	@RequestMapping("/allTree")

@@ -12,29 +12,22 @@
 	</sql>
 
 	<!--获取该用户权限列表-->
-	<select id="getResourceList" resultType="SysResource" parameterType="java.util.HashMap">
+	<select id="selectTreeResources" resultType="com.advance.scaffold.core.model.TreeResource" >
 		SELECT DISTINCT
-            re.id,
-            re.`name`,
-            re.url,
-            re.description,
-            re.icon,
-            re.pid,
-            re.state,
-            re.resource_type AS resourceType,
-            re.create_time AS createTime
+			sr.id,
+			sr.`name`,
+			sr.url,
+			sr.description,
+			sr.icon,
+			sr.pid,
+			sr.state,
+			sr.resource_type AS resourceType,
+			sr.create_time AS createTime
 		FROM
-		    sys_resource re
-		INNER JOIN sys_role_resource rore ON re.id = rore.resource_id
-		INNER JOIN sys_user_role uro ON rore.role_id = uro.role_id
-		<where>
-			<if test="resourcetype != null">
-				re.resource_type = #{resourcetype}
-			</if>
-			<if test="userId != null">
-				and uro.user_id = #{userId}
-			</if>
-		</where>
+			sys_resource sr
+		INNER JOIN sys_role_resource srr ON sr.id = srr.resource_id
+		INNER JOIN sys_user_role sur ON srr.role_id = sur.role_id
+		${ew.sqlSegment}
 	</select>
 
 	<!--用于添加资源记录时显示所有资源tree-->
