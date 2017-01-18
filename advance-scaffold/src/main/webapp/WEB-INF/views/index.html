@@ -51,17 +51,15 @@
                             <i class="layui-icon" style="top: 3px;">${tree.icon}</i><cite>${tree.name}</cite>
                         </a>
                         <dl class="layui-nav-child">
-                           <#list tree.childrens as child>
-
-                            <dd class="">
-                            <dd class="">
-                                <a href="javascript:void(0);" _href="${child.url}">
-                                    <cite>${child.name}</cite>
-                                </a>
-                            </dd>
-                            </dd>
-
-                        </#list>
+                            <#list tree.childrens as child>
+                                <dd class="">
+                                <dd class="">
+                                    <a href="javascript:void(0);" _href="${child.url}">
+                                        <cite>${child.name}</cite>
+                                    </a>
+                                </dd>
+                                </dd>
+                            </#list>
                         </dl>
                     </li>
                 </#list>
@@ -87,13 +85,6 @@
     </div>
 </div>
 <script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
     function logout() {
         //询问框
 
