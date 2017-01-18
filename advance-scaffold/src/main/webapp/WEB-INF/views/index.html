@@ -30,7 +30,7 @@
                     <dl class="layui-nav-child"> <!-- 二级菜单 -->
                         <dd><a href="">个人信息</a></dd>
                         <dd><a href="">切换帐号</a></dd>
-                        <dd><a href="javascript:void(0);" onclick="logout()">退出</a></dd>
+                        <dd id="logoutDd"><a href="javascript:void(0);" onclick="logout()" >退出</a></dd>
                     </dl>
                 </li>
                 <!-- <li class="layui-nav-item">
@@ -96,14 +96,17 @@
     })();
     function logout() {
         //询问框
+
         layer.confirm('确定要退出?', {
-            btn: ['确定', '取消'] //按钮
-        }, function () {
+            btn: ['确定', '取消']
+        }, function(index, layero){
             $.post('/welcome/logout', function (result) {
                 if (result.status === 200) {
                     location.href = '/welcome/index';
                 }
             }, 'json');
+        }, function(index){
+            $("#logoutDd").removeAttr("class");
         });
     }
 </script>
