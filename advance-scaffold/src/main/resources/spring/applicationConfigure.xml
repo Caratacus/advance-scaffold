@@ -39,7 +39,7 @@
 
     <!-- 配置AOP切面 -->
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.advance.scaffold.service..*Impl.*(..))"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.advance.scaffold.service..*Impl.*(..)) or execution(* com.baomidou.mybatisplus.service..*Imol.*(..)) or execution(* com.baomidou.mybatisplus.activerecord.Model.*(..))"/>
         <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
     </aop:config>
 
