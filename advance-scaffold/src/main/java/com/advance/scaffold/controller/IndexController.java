@@ -87,7 +87,7 @@ public class IndexController extends ConsoleController {
 
 	@RequestMapping("/view")
 	public String welcome() {
-		return "welcome";
+		return "main";
 	}
 
 }
