@@ -59,6 +59,11 @@
 				  and su.create_time <= #{createTimeEnd}
 				]]>
             </if>
+            <if test="loginName != null">
+                <![CDATA[
+				  and su.login_name like CONCAT('%', #{loginName}, '%')
+				]]>
+            </if>
         </where>
         group by su.id
     </select>

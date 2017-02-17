@@ -275,7 +275,7 @@
    left: 0px;
    width: 100%;
    height: 100%;
-	background:#F1F2F7 url(../images/lockscreenbg.jpg) repeat fixed;
+	background:#F1F2F7 url(/static/images/lockscreenbg.jpg) repeat fixed;
 	background-size:cover;
 	background-repeat:repeat;
 	z-index: 999999;
@@ -356,9 +356,11 @@
 .form-control {
     height: 30px;
 }
-@media (min-width: 1200px)
-.col-lg-12 {
-    width: 100%;
-    float: left;
+@media (min-width: 1200px){
+	.col-lg-12 {
+		width: 100%;
+		float: left;
+	}
 }
+
 

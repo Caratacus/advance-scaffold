@@ -26,7 +26,7 @@ public class SysUserController extends ConsoleController {
 
 	@RequestMapping("/manager")
 	public String manager() {
-		return "/user/userIndex";
+		return "user/userIndex";
 	}
 
 	@RequestMapping("/dataGrid")

@@ -90,9 +90,9 @@ public class ConsoleController extends SuperController implements HandlerInterce
 
 		int _size = size, _index = 1;
 		// 页数
-		Integer cursor = TypeConvert.toInteger(request.getParameter("page"));
+		Integer cursor = TypeConvert.toInteger(request.getParameter("offset"));
 		// 分页大小
-		Integer limit = TypeConvert.toInteger(request.getParameter("rows"));
+		Integer limit = TypeConvert.toInteger(request.getParameter("limit"));
 		// 排序
 		boolean order = TypeConvert.toString(request.getParameter("order")).equalsIgnoreCase("asc") ? true : false;
 		String sort = TypeConvert.toString(request.getParameter("sort"));
@@ -100,7 +100,7 @@ public class ConsoleController extends SuperController implements HandlerInterce
 		if (limit != null) {
 			_size = limit;
 		}
-		if (limit > GlobalConstant.MAX_LIMIT) {
+		if (limit != null && limit > GlobalConstant.MAX_LIMIT) {
 			_size = GlobalConstant.MAX_LIMIT;
 		}
 		if (cursor != null) {
