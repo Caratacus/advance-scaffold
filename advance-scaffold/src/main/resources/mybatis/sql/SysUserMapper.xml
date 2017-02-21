@@ -4,12 +4,12 @@
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-        id, login_name AS loginName, name, password, sex, age, email, user_type AS userType, state, create_time AS createTime, phone
+        id, login_name AS loginName, name, password, sex, user_type AS userType, state, create_time AS createTime, phone
     </sql>
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List2">
-        u.id, u.login_name AS loginName, u.name, u.password, u.sex, u.age, u.email, u.user_type AS userType, u.state, u.create_time AS createTime, u.phone
+        u.id, u.login_name AS loginName, u.name, u.password, u.sex, u.user_type AS userType, u.state, u.create_time AS createTime, u.phone
     </sql>
 
     <select id="listResource" resultType="String" parameterType="long">
@@ -32,8 +32,6 @@
         su.`name`,
         su.`password`,
         su.sex,
-        su.age,
-        su.email,
         su.user_type AS userType,
         su.state,
         su.create_time AS createTime,
@@ -76,8 +74,6 @@
             u.`name`,
             u. PASSWORD,
             u.sex,
-            u.age,
-            u.email,
             u.user_type AS userType,
             u.state,
             u.create_time AS createTime,

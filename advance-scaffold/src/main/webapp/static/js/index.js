@@ -72,7 +72,7 @@ $(function(){
         m = m < 10 ? '0' + m : m;
         s = s < 10 ? '0' + s : s;
         $('#time').html(h+":"+m+":"+s);
-        t=setTimeout(function(){startTimer()},500);
+        var t=setTimeout(function(){startTimer()},500);
    }
    // 锁屏状态检测
    function checkLockStatus(locked){

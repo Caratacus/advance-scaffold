@@ -19,8 +19,13 @@ public class SysRole extends AutoBaseModel {
 
 	private String description;
 
+	private Integer seq;
+
 	@TableField(exist = false)
 	private String resourceIds;
+
+	@TableField(value = "is_default")
+	private Integer isDefault;
 
 	@TableField(exist = false)
 	private String resourceNames;
@@ -55,5 +60,21 @@ public class SysRole extends AutoBaseModel {
 
 	public void setResourceNames(String resourceNames) {
 		this.resourceNames = resourceNames;
+	}
+
+	public Integer getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
+
+	public Integer getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Integer isDefault) {
+		this.isDefault = isDefault;
 	}
 }

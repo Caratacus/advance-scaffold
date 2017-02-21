@@ -1,19 +1,24 @@
 package com.advance.scaffold.controller;
 
-import com.advance.scaffold.core.model.Json;
-import com.advance.scaffold.core.model.UserSessionInfo;
-import com.advance.scaffold.model.SysUser;
+import java.util.List;
+
+import com.baomidou.mybatisplus.mapper.Condition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.app.common.Common;
-import com.app.common.MapUtils;
 import com.advance.scaffold.core.constant.GlobalConstant;
 import com.advance.scaffold.core.controller.ConsoleController;
 import com.advance.scaffold.core.model.Grid;
+import com.advance.scaffold.core.model.Json;
+import com.advance.scaffold.core.model.UserSessionInfo;
+import com.advance.scaffold.model.SysRole;
+import com.advance.scaffold.model.SysUser;
+import com.advance.scaffold.service.SysRoleService;
 import com.advance.scaffold.service.SysUserService;
+import com.app.common.Common;
+import com.app.common.MapUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -23,6 +28,9 @@ public class SysUserController extends ConsoleController {
 
 	@Autowired
 	private SysUserService sysUserService;
+
+	@Autowired
+	private SysRoleService sysRoleService;
 
 	@RequestMapping("/manager")
 	public String manager() {
@@ -74,6 +82,9 @@ public class SysUserController extends ConsoleController {
 
 	@RequestMapping("/addPage")
 	public String addPage() {
+		List<SysRole> roles = sysRoleService.selectList(Condition.Empty());
+		request.setAttribute("roles",roles);
+//		request.setAttribute("treeLay", JsonUtils.toJson(sysRoleService.treeLay()));
 		return "/user/userAdd";
 	}
 

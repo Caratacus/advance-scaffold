@@ -35,3 +35,8 @@ layui.use(['form'],
            });
 
     });
+
+function keyLogin(){
+    if (event.keyCode==13)  //回车键的键值为13
+        $('.submit_btn').click(); //调用登录按钮的登录事件
+}

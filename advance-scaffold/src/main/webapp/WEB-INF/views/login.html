@@ -13,7 +13,7 @@
     <!-- load css -->
     <link rel="stylesheet" type="text/css" href="/static/css/login.css" media="all">
 </head>
-<body>
+<body onkeydown="keyLogin();">
 <div class="layui-canvs"></div>
 <div class="layui-layout layui-layout-login">
     <h1>
@@ -27,12 +27,6 @@
         <div class="layui-pwd-icon larry-login">
             <input type="password" placeholder="密码" id="password" name="password" class="login_txtbx"/>
         </div>
-        <!--<div class="layui-val-icon larry-login">
-            <div class="layui-code-box">
-                <input type="text" id="code" name="code" placeholder="验证码" maxlength="4" class="login_txtbx">
-                <img src="/static/testImage/verifyimg.png" alt="" class="verifyImg" id="verifyImg" onclick="javascript:this.src='xxx'+Math.random();">
-            </div>
-        </div>-->
         <div class="layui-submit larry-login">
             <input type="button" value="立即登陆" lay-filter="login" lay-submit="" class="submit_btn"/>
         </div>

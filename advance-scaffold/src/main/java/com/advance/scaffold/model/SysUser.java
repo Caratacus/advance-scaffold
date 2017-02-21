@@ -26,11 +26,6 @@ public class SysUser extends AutoBaseModel {
 
 	private Integer sex;
 
-	private Integer age;
-
-	/** 邮箱 */
-	private String email;
-
 	@TableField(value = "user_type")
 	private Integer userType;
 
@@ -40,6 +35,7 @@ public class SysUser extends AutoBaseModel {
 	private Date createTime;
 
 	private String phone;
+
 	@TableField(exist = false)
 	private String roleIds;
 	@TableField(exist = false)
@@ -76,20 +72,8 @@ public class SysUser extends AutoBaseModel {
 		this.sex = sex;
 	}
 
-	public Integer getAge() {
-		return this.age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 	public Integer getState() {

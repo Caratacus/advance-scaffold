@@ -1,5 +1,6 @@
 package com.advance.scaffold.service.impl;
 
+import com.advance.scaffold.core.model.TreeLay;
 import com.app.common.TypeConvert;
 import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.model.SysRole;
@@ -44,6 +45,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 				Tree tree = new Tree();
 				tree.setId(sysRole.getId().toString());
 				tree.setText(sysRole.getName());
+				trees.add(tree);
+			}
+		}
+		return trees;
+	}
+
+	@Override
+	public List<TreeLay> treeLay() {
+		List<TreeLay> trees = new ArrayList<TreeLay>();
+		List<SysRole> sysRoles = this.selectList(Condition.Empty());
+		if ((sysRoles != null) && (sysRoles.size() > 0)) {
+			for (SysRole sysRole : sysRoles) {
+				TreeLay tree = new TreeLay();
+				tree.setId(sysRole.getId().toString());
+				tree.setName(sysRole.getName());
 				trees.add(tree);
 			}
 		}
