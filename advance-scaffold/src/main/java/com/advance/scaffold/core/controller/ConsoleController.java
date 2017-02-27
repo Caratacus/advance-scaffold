@@ -90,9 +90,9 @@ public class ConsoleController extends SuperController implements HandlerInterce
 
 		int _size = size, _index = 1;
 		// 页数
-		Integer cursor = TypeConvert.toInteger(request.getParameter("offset"));
+		Integer cursor = TypeConvert.toInteger(request.getParameter("pageNumber"));
 		// 分页大小
-		Integer limit = TypeConvert.toInteger(request.getParameter("limit"));
+		Integer limit = TypeConvert.toInteger(request.getParameter("pageSize"));
 		// 排序
 		boolean order = TypeConvert.toString(request.getParameter("order")).equalsIgnoreCase("asc") ? true : false;
 		String sort = TypeConvert.toString(request.getParameter("sort"));
@@ -105,6 +105,8 @@ public class ConsoleController extends SuperController implements HandlerInterce
 		}
 		if (cursor != null) {
 			_index = cursor;
+		}else{
+			cursor = _index;
 		}
 		Page page = new Page(cursor, limit);
 		page.setOrderByField(sort);

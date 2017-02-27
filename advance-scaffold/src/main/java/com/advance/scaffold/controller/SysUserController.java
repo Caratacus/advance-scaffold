@@ -46,7 +46,10 @@ public class SysUserController extends ConsoleController {
 			Page<SysUser> page = getPage();
 			page.setCondition(MapUtils.beanToMapNotNull(user));
 			Page<SysUser> sysUsers = sysUserService.getUsers(page);
+			//服务器端分页
 			grid.setRows(sysUsers.getRecords());
+			//客户端分页
+			grid.setRows(sysUserService.selectList(Condition.Empty()));
 			grid.setTotal(sysUsers.getTotal());
 			this.printJson(grid);
 		} catch (Exception e) {
@@ -138,7 +141,9 @@ public class SysUserController extends ConsoleController {
 	public String editPage(Long id) {
 		try {
 			SysUser sysUser = sysUserService.getInfo(id);
+			List<SysRole> roles = sysRoleService.selectList(Condition.Empty());
 			request.setAttribute("user", sysUser);
+			request.setAttribute("roles",roles);
 		} catch (Exception e) {
 			logger.error(Common.method(), e);
 		}
