@@ -36,15 +36,15 @@
     <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-block">
-           <!-- <#if user.sex == 0>
-                    <input type="radio" name="sex" value="0" title="男" checked>
-                    <input type="radio" name="sex" value="1" title="女">
-                <#else>
-                    <input type="radio" name="sex" value="0" title="男">
-                    <input type="radio" name="sex" value="1" title="女" checked>
-            </#if>-->
-                    <input type="radio" name="sex" value="0" title="男" <#if user.sex == 0>checked</#if>>
-                    <input type="radio" name="sex" value="1" title="女" <#if user.sex == 1>checked</#if>>
+            <!-- <#if user.sex == 0>
+                     <input type="radio" name="sex" value="0" title="男" checked>
+                     <input type="radio" name="sex" value="1" title="女">
+                 <#else>
+                     <input type="radio" name="sex" value="0" title="男">
+                     <input type="radio" name="sex" value="1" title="女" checked>
+             </#if>-->
+            <input type="radio" name="sex" value="0" title="男" <#if user.sex == 0>checked</#if>>
+            <input type="radio" name="sex" value="1" title="女" <#if user.sex == 1>checked</#if>>
         </div>
     </div>
     <div class="layui-form-item">
@@ -57,15 +57,13 @@
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">角色${user.roleIds}</label>
+        <label class="layui-form-label">角色</label>
         <div class="layui-input-block">
             <select name="roleIds" id="roleIds" lay-verify="required">
                 <#list roles as role>
-                    <#if role.id == ${user.roleIds}>
+                    <#if role.id == 1>
                         <option value="${role.id}">${role.name}</option>
                     </#if>
-
-
                 </#list>
 
             </select>
