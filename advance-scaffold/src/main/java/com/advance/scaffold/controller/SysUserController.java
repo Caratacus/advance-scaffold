@@ -1,5 +1,6 @@
 package com.advance.scaffold.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.baomidou.mybatisplus.mapper.Condition;
@@ -127,7 +128,9 @@ public class SysUserController extends ConsoleController {
 	public void delete(Long id) {
 		Json json = new Json();
 		try {
+			List<Long> ids = new ArrayList<Long>();
 			sysUserService.deleteById(id);
+			sysUserService.deleteBatchIds(ids);
 			json.setMsg("删除成功！");
 			json.setSuccess(true);
 		} catch (Exception e) {
@@ -136,6 +139,24 @@ public class SysUserController extends ConsoleController {
 		}
 		this.printJson(json);
 	}
+
+
+	@RequestMapping("/deleteByIds")
+	@ResponseBody
+	public void deleteByIds(List<Long> ids) {
+		Json json = new Json();
+		try {
+			sysUserService.deleteBatchIds(ids);
+			json.setMsg("删除成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg(e.getMessage());
+			logger.error(Common.method(), e);
+		}
+		this.printJson(json);
+	}
+
+
 
 	@RequestMapping("/editPage")
 	public String editPage(Long id) {
