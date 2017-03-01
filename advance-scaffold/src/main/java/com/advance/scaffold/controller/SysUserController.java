@@ -1,9 +1,8 @@
 package com.advance.scaffold.controller;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import com.baomidou.mybatisplus.mapper.Condition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,7 @@ import com.advance.scaffold.service.SysRoleService;
 import com.advance.scaffold.service.SysUserService;
 import com.app.common.Common;
 import com.app.common.MapUtils;
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -128,9 +128,7 @@ public class SysUserController extends ConsoleController {
 	public void delete(Long id) {
 		Json json = new Json();
 		try {
-			List<Long> ids = new ArrayList<Long>();
 			sysUserService.deleteById(id);
-			sysUserService.deleteBatchIds(ids);
 			json.setMsg("删除成功！");
 			json.setSuccess(true);
 		} catch (Exception e) {
@@ -143,10 +141,12 @@ public class SysUserController extends ConsoleController {
 
 	@RequestMapping("/deleteByIds")
 	@ResponseBody
-	public void deleteByIds(List<Long> ids) {
+	public void deleteByIds(String ids) {
 		Json json = new Json();
 		try {
-			sysUserService.deleteBatchIds(ids);
+			String[] idsStr = ids.split(",");
+			List list = Arrays.asList(idsStr);
+			sysUserService.deleteBatchIds(list);
 			json.setMsg("删除成功！");
 			json.setSuccess(true);
 		} catch (Exception e) {

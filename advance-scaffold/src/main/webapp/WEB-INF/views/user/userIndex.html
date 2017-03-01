@@ -23,7 +23,7 @@
         .table th, .table td {
 
             text-align: center;
-            height:38px;
+            height: 38px;
 
         }
     </style>
@@ -54,28 +54,28 @@
                         </form>
                     </div>
                 </div>-->
-                <div id="toolbar" class="btn-group">
-                    <button id="btn_add" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                    </button>
-                    <button id="btn_edit" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                    </button>
-                    <button id="btn_delete" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                    </button>
-                </div>
-                <table id="dataTable"   class="table-striped table-hover" data-mobile-responsive="true">
-                </table>
+            <div id="toolbar" class="btn-group">
+                <button id="btn_add" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+                <button id="btn_edit" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+                <button id="btn_delete" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+            </div>
+            <table id="dataTable" class="table-striped table-hover" data-mobile-responsive="true">
+            </table>
         </div>
     </div>
-</div>
+    </div>
 </section>
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
 <script>
     var $table = $("#dataTable");
 
-    $(function(){
+    $(function () {
         var oTable = new TableInit();
         oTable.Init();
     });
@@ -95,23 +95,23 @@
                 sortable: false,                     //是否启用排序
                 sortOrder: "asc",                   //排序方式
                 sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
-                responseHandler: function(data){
+                responseHandler: function (data) {
                     return data.rows;
                 },
 //                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
                 pageNumber: 1,                       //初始化加载第一页，默认第一页
-                queryParamsType : "undefined",
+                queryParamsType: "undefined",
                 pageSize: 10,                       //每页的记录行数（*）
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
                 showColumns: true,                  //是否显示所有的列
-                queryParams:function queryParams(params) {
+                queryParams: function queryParams(params) {
                     return {
                         pageSize: params.pageSize,
                         pageNumber: params.pageNumber,
-                        loginName:params.searchText
+                        loginName: params.searchText
                     };
                 },
-                search:true,
+                search: true,
                 showRefresh: true,                  //是否显示刷新按钮
                 minimumCountColumns: 2,             //最少允许的列数
                 clickToSelect: true,                //是否启用点击选中行
@@ -124,14 +124,20 @@
                     checkbox: true
                 }, {
                     field: 'loginName',
-                    title: '登录名'
+                    title: '登录名',
+                    formatter: function (value,row){
+                        if(row.id == "${userInfo.id}"){
+                            return "<span id='own'>"+value+"</span>"
+                        }else
+                            return value;
+                    }
                 }, {
                     field: 'name',
                     title: '姓名'
                 }, {
                     field: 'createTime',
                     title: '创建时间',
-                    formatter: function(value){
+                    formatter: function (value) {
                         return jsonTimeStamp(value);
                     }
                 },
@@ -150,7 +156,7 @@
                     {
                         field: 'phone',
                         title: '电话'
-                    },{
+                    }, {
                         field: 'userType',
                         title: '用户类型',
                         formatter: function (value) {
@@ -161,7 +167,7 @@
                             }
                             return "未知类型";
                         }
-                    },{
+                    }, {
                         field: 'state',
                         title: '状态',
                         formatter: function (value) {
@@ -172,16 +178,20 @@
                                     return '停用';
                             }
                         }
-                    },{
-                        file:'',
-                        title:'操作',
-                        formatter:function(value,row){
-                            return '<a class="edit" href="javascript:void(0)" title="edit" onClick="editPage(\''+row.id+'\')"><i class="icon-edit"></i></a>'
-                                    + '&nbsp;&nbsp;<a class="delete" href="javascript:void(0)" title="delete" onClick="deleteFun(\''+row.id+'\')"><i class="icon-remove"></i></a>'
+                    }, {
+                        file: '',
+                        title: '操作',
+                        formatter: function (value, row) {
+                            return '<a class="edit" href="javascript:void(0)" title="edit" onClick="editPage(\'' + row.id + '\')"><i class="icon-edit"></i></a>'
+                                    + '&nbsp;&nbsp;<a class="delete" href="javascript:void(0)" title="delete" onClick="deleteFun(\'' + row.id + '\')"><i class="icon-remove"></i></a>'
                         }
                     }
 
-                ]
+                ],
+                onLoadSuccess: function(data){
+                    //将自己这条记录的checkbox置为无效，不可删除
+                    $("#own").parent("td").parent("tr").find("td").eq(0).find("input[name='btSelectItem']").attr("disabled","true");
+                }
             });
         };
 
@@ -189,14 +199,14 @@
     };
 
 
-    layui.use(['jquery','layer'],function(){
+    layui.use(['jquery', 'layer'], function () {
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
 
-        $("#btn_add").click(function(){
+        $("#btn_add").click(function () {
 
             layer.open({
-                title:'新增',
+                title: '新增',
                 type: 2,
                 skin: 'layui-layer-rim', //加上边框
                 area: ['600px', '450px'], //宽高
@@ -204,11 +214,11 @@
             });
         });
 
-        $("#btn_edit").click(function(){
+        $("#btn_edit").click(function () {
 
             var selects = $('#dataTable').bootstrapTable('getSelections');
             var newSelects = $.parseJSON(JSON.stringify(selects));
-            if(newSelects.size > 1){
+            if (newSelects.size > 1) {
                 layer.alert()
             }
             alert(newSelects[0].id)
@@ -217,48 +227,31 @@
     });
 
     //删除多条记录
-    $("#btn_delete").click(function(){
+    $("#btn_delete").click(function () {
         //获取选中行数据
-        var datas =  $.parseJSON(JSON.stringify($table.bootstrapTable('getSelections')));
-        var id = "";
-        if(datas.length > 0){
-            for(var i = 0;i < datas.length;i++){
-               id += datas[i].id+",";
+        var datas = $.parseJSON(JSON.stringify($table.bootstrapTable('getSelections')));
+        var ids = "";
+        if (datas.length > 0) {
+            for (var i = 0; i < datas.length; i++) {
+
+                ids += datas[i].id + ",";
             }
-            alert(id)
+
+                $.post('/user/deleteByIds', {
+                    ids: ids
+                }, function (result) {
+                    if (result.success) {
+                        layer.alert(result.msg, {icon: 1}, function () {
+                            location.reload();
+                        });
+                    }
+                }, 'JSON');
+        } else {
+            layer.alert('请选取要删除的数据行！');
         }
     });
 
-    function deleteItem( requestUrl, selectIndex, reLoad){
-        var selRow = $table.bootstrapTable('getSelections');
-
-        layer.alert(selRow);
-        if(selRow==null){
-           layer.confirm("您确定要删除用户吗?",{icon: 3, title:'提示'}, function(index){
-                $.ajax({
-                    type: "POST",
-                    cache:false,
-                    async : true,
-                    dataType : "json",
-                    url:  requestUrl,
-                    data: datas,
-                    success: function(data){
-                        alert(data.mess);
-                        if ( data.state == 200 ){
-                            $table.bootstrapTable('hideRow', {index:selectIndex});
-                            if(reLoad){
-                                $table.bootstrapTable('refresh');
-                            }
-                        }
-                    }
-                });
-            })
-        }else{
-            alert('请选取要删除的数据行！');
-        }
-    }
-
-    function editPage(id){
+    function editPage(id) {
 
         layer.alert(id)
 //        layer.open({
@@ -270,27 +263,26 @@
 //        });
     }
 
-    function deleteFun(id){
+    function deleteFun(id) {
+        var currentUserId = '${userInfo.id}';
+        /*当前登录用户的ID*/
+        if (currentUserId != id) {
+            layer.confirm("您确定删除该用户吗?", {icon: 3, title: '提示'}, function (index) {
 
-        layer.confirm("您确定删除该用户吗?",{icon: 3, title:'提示'}, function(index){
-            var currentUserId = '${userInfo.id}';
-            /*当前登录用户的ID*/
-            if (currentUserId != id) {
-//                progressLoad();
                 $.post('/user/delete', {
                     id: id
                 }, function (result) {
                     if (result.success) {
-                        layer.alert(result.msg,  {icon: 1},function(){
-                            $table.bootstrapTable('refresh');
+                        layer.alert(result.msg, {icon: 1}, function () {
+                            location.reload();
                         });
                     }
                 }, 'JSON');
-            } else {
+                layer.close(index);
+            });
+        }else {
                 layer.alert('不可以删除自己!', {icon: 2})
             }
-            layer.close(index);
-        });
     }
 </script>
 </body>
