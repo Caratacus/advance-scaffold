@@ -11,77 +11,134 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
 
-</head>
-<body>
-<form class="layui-form" action="" style="width:70%;">
-    <!--<ul id="demo"></ul>-->
-    <div class="layui-form-item">
-        <label class="layui-form-label">登录名</label>
-        <div class="layui-input-block">
-            <input type="text" name="loginName" required lay-verify="required|username" placeholder="请输入登录名" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">姓名</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-inline">
-            <input type="password" name="password" required lay-verify="required|pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" value="0" title="男">
-            <input type="radio" name="sex" value="1" title="女" checked>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户类型</label>
-        <div class="layui-input-block">
-            <select name="userType" lay-verify="required">
-                <option value="0">管理员</option>
-                <option value="1">用户</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">角色</label>
-        <div class="layui-input-block">
-            <select name="roleIds" id="roleIds" lay-verify="required">
-                <#list roles as role>
-                    <option value="${role.id}">${role.name}</option>
-                </#list>
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" media="all">
+    <script src="/static/lib/jquery-2.1.3.js"></script>
+    <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
 
-            </select>
+</head>
+<body >
+
+    <form class="form-horizontal" style="padding: 10px;">
+        <div class="control-group">
+
+            <!-- Text input-->
+            <label class="control-label" >登录名</label>
+
+            <div class="controls">
+                <input type="text" placeholder="请输入登录名" class="input-xlarge">
+
+                <p class="help-block"></p>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
-        <div class="layui-input-block"><!--lay-verify="phone"-->
-            <input type="text" name="phone" placeholder="请输入电话"  autocomplete="off" class="layui-input">
+
+
+        <div class="control-group">
+
+            <!-- Text input-->
+            <label class="control-label" >姓名</label>
+
+            <div class="controls">
+                <input type="text" placeholder="请输入姓名" class="input-xlarge">
+
+                <p class="help-block"></p>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">可操作</label>
-        <div class="layui-input-block">
-            <select name="state" lay-verify="required">
-                <option value="1">是</option>
-                <option value="0">否</option>
-            </select>
+        <div class="control-group">
+
+            <!-- Text input-->
+            <label class="control-label" >密码</label>
+
+            <div class="controls">
+                <input type="text" placeholder="请输入密码" class="input-xlarge">
+
+                <p class="help-block"></p>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item" style="padding-top: 10px;">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="tijiao">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <div class="control-group">
+            <label class="control-label">性别</label>
+
+            <div class="controls">
+                <!-- Inline Radios -->
+                <label class="radio inline">
+                    <input type="radio" value="男" name="sex" checked="checked">
+                    男
+                </label>
+                <label class="radio inline">
+                    <input type="radio" value="女" name="sex">
+                    女
+                </label>
+            </div>
         </div>
-    </div>
-</form>
+        <div class="control-group">
+
+            <!-- Select Basic -->
+            <label class="control-label">用户类型</label>
+
+            <div class="controls">
+                <select class="form-control">
+                    <option>管理员</option>
+                    <option>用户</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="control-group">
+
+            <!-- Select Basic -->
+            <label class="control-label">角色</label>
+
+            <div class="controls">
+                <select class="form-control">
+                    <option>角色1</option>
+                    <option>角色2</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="control-group">
+
+            <!-- Text input-->
+            <label class="control-label" >电话</label>
+
+            <div class="controls">
+                <input type="text" placeholder="请输入电话" class="input-xlarge">
+
+                <p class="help-block"></p>
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label">可操作</label>
+
+            <div class="controls">
+                <!-- Inline Radios -->
+                <label class="radio inline">
+                    <input type="radio" value="是" name="state" checked="checked">
+                    是
+                </label>
+                <label class="radio inline">
+                    <input type="radio" value="否" name="state">
+                    否
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label"></label>
+
+            <!-- Button -->
+            <div class="controls" style="text-align:center;">
+                <button class="btn btn-success">提交</button> &nbsp;&nbsp;
+                <button class="btn btn-close">关闭</button>
+            </div>
+        </div>
+    </form>
+
 
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
 

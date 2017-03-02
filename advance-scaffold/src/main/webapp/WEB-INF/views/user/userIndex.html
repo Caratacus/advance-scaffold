@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-<section class="layui-larry-box">
+<section class="layui-larry-box" >
     <div class="larry-personal">
 
         <div class="layui-tab">
@@ -65,9 +65,9 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                 </button>
             </div>
-            <table id="dataTable" class="table-striped table-hover" data-mobile-responsive="true">
-            </table>
         </div>
+        <table id="dataTable" class="table-striped table-hover" data-mobile-responsive="true">
+        </table>
     </div>
     </div>
 </section>
@@ -209,11 +209,11 @@
 
         $("#btn_add").click(function () {
 
-            layer.open({
+            top.layer.open({
                 title: '新增',
                 type: 2,
                 skin: 'layui-layer-rim', //加上边框
-                area: ['600px', '450px'], //宽高
+                area: ['480px', '450px'], //宽高
                 content: '/user/addPage'
             });
         });
