@@ -12,7 +12,7 @@ repositories {
 }
 
 ext {
-    mybatisplus = "2.0.2.RELEASE"
+    mybatisplus = "2.0.3.RELEASE"
     apptools = "1.3.1.RELEASE"
     springframework = "4.3.5.RELEASE"
     mysql = "5.1.40"

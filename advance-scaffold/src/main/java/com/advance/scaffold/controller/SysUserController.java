@@ -146,6 +146,7 @@ public class SysUserController extends ConsoleController {
 		try {
 			String[] idsStr = ids.split(",");
 			List list = Arrays.asList(idsStr);
+
 			sysUserService.deleteBatchIds(list);
 			json.setMsg("删除成功！");
 			json.setSuccess(true);
