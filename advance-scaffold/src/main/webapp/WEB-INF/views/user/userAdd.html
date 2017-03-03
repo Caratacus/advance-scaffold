@@ -13,29 +13,26 @@
 
     <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap.min.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" media="all">
-    <script src="/static/lib/jquery-2.1.3.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrapValidator.css" media="all">
+
+    <script src="/static/lib/jquery.min.js"></script>
     <script src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/lib/bootstrap/js/bootstrapValidator.js"></script>
 
 </head>
 <body >
 
-    <form class="form-horizontal" style="padding: 10px;">
+    <form id="frm" class="form-horizontal" style="padding: 10px;" action="/user/add">
         <div class="control-group">
 
-            <!-- Text input-->
             <label class="control-label" >登录名</label>
-
             <div class="controls">
-                <input type="text" placeholder="请输入登录名" class="input-xlarge">
-
+                <input type="text" name="loginName" placeholder="请输入登录名" class="input-xlarge">
                 <p class="help-block"></p>
             </div>
         </div>
 
-
         <div class="control-group">
-
-            <!-- Text input-->
             <label class="control-label" >姓名</label>
 
             <div class="controls">
@@ -91,9 +88,10 @@
             <label class="control-label">角色</label>
 
             <div class="controls">
-                <select class="form-control">
-                    <option>角色1</option>
-                    <option>角色2</option>
+                <select class="form-control" multiple="multiple">
+                    <#list roles as role>
+                        <option value="${role.id}">${role.name}</option>
+                    </#list>
                 </select>
             </div>
 
@@ -133,7 +131,7 @@
 
             <!-- Button -->
             <div class="controls" style="text-align:center;">
-                <button class="btn btn-success">提交</button> &nbsp;&nbsp;
+                <button type="submit" class="btn btn-success">提交</button> &nbsp;&nbsp;
                 <button class="btn btn-close">关闭</button>
             </div>
         </div>
@@ -144,11 +142,87 @@
 
 <script>
 
+
     layui.use(['jquery','layer','form'],function(){
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
         var form = layui.form();
 
+        $(function(){
+
+            //验证并提交表单
+            $('#frm').bootstrapValidator({
+                        message: 'This value is not valid',
+                        feedbackIcons: {
+                            valid: 'glyphicon glyphicon-ok',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        },
+                        fields: {
+                            loginName: {
+                                message: 'The loginName is not valid',
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The loginName is required and can\'t be empty'
+                                    },
+                                    stringLength: {
+                                        min: 6,
+                                        max: 30,
+                                        message: 'The loginName must be more than 6 and less than 30 characters long'
+                                    },
+                                    /*remote: {
+                                     url: 'remote.php',
+                                     message: 'The username is not available'
+                                     },*/
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9_\.]+$/,
+                                        message: 'The loginName can only consist of alphabetical, number, dot and underscore'
+                                    }
+                                }
+                            },
+                            email: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The email address is required and can\'t be empty'
+                                    },
+                                    emailAddress: {
+                                        message: 'The input is not a valid email address'
+                                    }
+                                }
+                            },
+                            password: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The password is required and can\'t be empty'
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .on('success.form.bv', function(e) {
+                        // Prevent form submission
+                        e.preventDefault();
+
+                        // Get the form instance
+                        var $form = $(e.target);
+
+                        // Get the BootstrapValidator instance
+                        var bv = $form.data('bootstrapValidator');
+
+                        // Use Ajax to submit form data
+                        $.post($form.attr('action'), $form.serialize(), function(result) {
+                            console.log(result);
+                        }, 'json');
+                    });
+        });
+
+
+        //提交表单
+        $(".btn-success").onclick(function(){
+
+            $("#frm").submit();
+
+        });
         form.on('submit(tijiao)', function(data){
             $.post('/user/add',data.field,function(res){
                 var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
