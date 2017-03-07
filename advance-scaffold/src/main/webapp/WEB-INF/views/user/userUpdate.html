@@ -1,129 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <#include "/common/include.html" />
 <head>
-    <meta charset="UTF-8">
-    <title>个人信息更新</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
+    <title>个人信息修改</title>
 
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrapValidator.css"/>
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap-responsive.min.css" media="all">
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap-multiselect.css" media="all">
+
+    <script type="text/javascript" src="/static/lib/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap-multiselect.js"></script>
 </head>
 <body>
-<form class="layui-form" action="" style="width:70%;">
-    <div class="layui-form-item">
-        <input type="hidden" name="id" value="${user.id}"/>
-        <label class="layui-form-label">登录名</label>
-        <div class="layui-input-block">
-            <input type="text" name="loginName" required lay-verify="required|username" placeholder="请输入登录名" autocomplete="off" class="layui-input" value="${user.loginName}">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">姓名</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" value="${user.name}">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-inline">
-            <input type="password" name="password" required lay-verify="required|pass" placeholder="请输入密码" autocomplete="off" class="layui-input" >
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" value="0" title="男" <#if user.sex == 0>checked</#if>>
-            <input type="radio" name="sex" value="1" title="女" <#if user.sex == 1>checked</#if>>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">用户类型</label>
-        <div class="layui-input-block">
-            <select name="userType" lay-verify="required">
-                <option value="0" <#if user.userType == 0>selected</#if>>管理员</option>
-                <option value="1" <#if user.userType == 1>selected</#if>>用户</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">角色</label>
-        <div class="layui-input-block">
-            <select name="roleIds" id="roleIds" lay-verify="required">
-                <#list roles as role>
-                    <#if role.id == 1>
-                        <option value="${role.id}">${role.name}</option>
-                    </#if>
-                </#list>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
 
-            </select>
+            <form id="defaultForm" method="post" class="form-horizontal" action="/user/edit">
+                <div class="form-group">
+                    <input name="id" type="hidden"  value="${user.id}">
+                    <label class="col-lg-3 control-label" >用户名</label>
+                    <div class="col-lg-3">
+                        <input type="text" name="loginName" placeholder="请输入用户名" value="${user.loginName}" class="form-control  input-sm">
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">昵称</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control input-sm" name="name"  value="${user.name}" placeholder="请输入昵称" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">密码</label>
+                    <div class="col-lg-3">
+                        <input type="password" class="form-control input-sm" name="password" placeholder="密码不修改留空"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 ">性别</label>
+
+                    <div class="col-lg-3">
+                        <label class="checkbox-inline">
+                            <input type="radio" name="sex" value="0"> 男
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="sex" value="1"> 女
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">用户类型</label>
+
+                    <div class="col-lg-3">
+                        <select name="userType" id="userType">
+                            <option value="0">管理员</option>
+                            <option value="1">用户</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">角色</label>
+
+                    <div class="col-lg-3">
+                        <select id="roleIds" name="roleIds" multiple="multiple">
+
+                            <#list roles as role>
+                                <option value="${role.id}">${role.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">电话</label>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control input-sm"  name="phone" value="${user.phone}" placeholder="请输入电话"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-lg-3 ">可操作</label>
+
+                    <div class="col-lg-3">
+                        <label class="checkbox-inline">
+                            <input type="radio" name="state" value="0"> 是
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="state" value="1"> 否
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align: center;">
+                    <div class="col-lg-9 col-lg-offset-3">
+                        <button type="submit" class="btn btn-primary">提交</button> &nbsp;&nbsp;
+                        <button type="button" class="btn btn-close">关闭</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
-        <div class="layui-input-block"><!--lay-verify="phone"-->
-            <input type="text" name="phone" placeholder="请输入电话"  autocomplete="off" class="layui-input" value="${user.phone}">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">可操作</label>
-        <div class="layui-input-block">
-            <select name="state" lay-verify="required">
-                <option value="1">是</option>
-                <option value="0">否</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item" style="padding-top: 10px;">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="tijiao">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-        </div>
-    </div>
-</form>
+</div>
 
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script type="text/javascript">
 
-<script>
 
-    layui.use(['jquery','layer','form'],function(){
+    layui.use(['jquery','layer'],function(){
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
-        var form = layui.form();
 
-        form.on('submit(tijiao)', function(data){
-            $.post('/user/edit',data.field,function(res){
-                var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+        $(function() {
 
-                var data = $.parseJSON(res);
-                if(data.success){
-                    parent.layer.msg(data.msg, {
-                        icon: 1,
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function(){
-                        //do something
-                        parent.layer.close(index); //执行关闭
-                        parent.location.reload();
-                    });
-
-                }else{
-                    layer.alert(data.msg);
-                }
+            $('#userType').multiselect({
+                buttonWidth: '400px',
+                dropRight: true
             });
-            return false;
-        });
 
-        $(function(){
-            //layer.alert($("input[name='sex'][checked]").val())
-            //$("input[name='sex'][value=${user.sex}]").attr("checked",true);
-            //$("input:radio[name='sex']").eq(0).attr("checked",true);
-        })
+            $('#roleIds').multiselect({
+                buttonText: function(options, select) {
+                    if (options.length === 0) {
+                        return '--请选择--';
+                    }
+                    else if (options.length > 3) {
+                        return 'More than 3 options selected!';
+                    }
+                    else {
+                        var labels = [];
+                        options.each(function() {
+                            if ($(this).attr('label') !== undefined) {
+                                labels.push($(this).attr('label'));
+                            }
+                            else {
+                                labels.push($(this).html());
+                            }
+                        });
+                        return labels.join(', ') + '';
+                    }
+                },
+                buttonWidth: '400px',
+                dropRight: true
+            });
+
+            //赋值
+
+            $("input[name='sex']").get(${user.sex}).checked=true;
+            $("input[name='state']").get(${user.state}).checked=true;
+            $("#userType option").eq('${user.userType}').attr("selected",true);
+//            $('#userType option:selected').val('${user.userType}');
+            $('#userType').multiselect('select', '1');
+            if('${user.roleIds}' != null && '${user.roleIds}' != ""){
+                var roleIds = '${user.roleIds}';
+                roleIds = roleIds + ",";
+                var roleIdselect = roleIds.split(",");
+                //多选框赋值
+                $('#roleIds').multiselect('select', roleIdselect);
+            }
+
+            $('#defaultForm')
+                    .bootstrapValidator({
+                        container: 'tooltip',
+                        message: 'This value is not valid',
+                        feedbackIcons: {
+                            valid: 'glyphicon glyphicon-ok',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        },
+                        fields: {
+                            loginName: {
+                                message: 'The username is not valid',
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The username is required'
+                                    },
+                                    stringLength: {
+                                        min: 4,
+                                        max: 20,
+                                        message: 'The username must be more than 6 and less than 30 characters long'
+                                    },
+                                    regexp: {
+                                        regexp: /^[a-zA-Z0-9_\.]+$/,
+                                        message: '只能由字母、数字、点和下划线组成'
+                                    }
+                                }
+                            },
+                            name: {
+                                message: 'The name is not valid',
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The name is required'
+                                    },
+                                    stringLength: {
+                                        min: 2,
+                                        max: 10,
+                                        message: 'The name must be more than 2 and less than 10 characters long'
+                                    }
+                                }
+                            },
+                            phone: {
+                                message: 'The phone number is not valid',
+                                validators: {
+                                    digits: {
+                                        message: 'The value can contain only digits'
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .on('success.form.bv', function(e) {
+                        // Prevent form submission
+                        e.preventDefault();
+
+                        // Get the form instance
+                        var $form = $(e.target);
+
+                        // Get the BootstrapValidator instance
+                        var bv = $form.data('bootstrapValidator');
+
+                        // Use Ajax to submit form data
+                        $.post($form.attr('action'), $form.serialize(), function(data) {
+                            var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+
+                            if(data.success){
+                                parent.layer.msg(data.msg, {
+                                    icon: 1,
+                                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    //do something
+                                    parent.layer.close(index); //执行关闭
+                                    // parent.$("#dataTable").load('/user/dataGrid');
+                                });
+
+                            }else{
+                                layer.alert(data.msg);
+                            }
+                        }, 'json');
+                    });
+        });
 
     });
 
-
 </script>
 </body>
+</html>

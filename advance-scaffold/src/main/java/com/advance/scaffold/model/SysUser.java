@@ -29,6 +29,7 @@ public class SysUser extends AutoBaseModel {
 	@TableField(value = "user_type")
 	private Integer userType;
 
+	//可操作 0 是; 1 否
 	private Integer state;
 
 	@TableField(value = "create_time")
@@ -37,7 +38,7 @@ public class SysUser extends AutoBaseModel {
 	private String phone;
 
 	@TableField(exist = false)
-	private String roleIds;
+	private String roleIds="";
 	@TableField(exist = false)
 	private String roleNames;
 	/**

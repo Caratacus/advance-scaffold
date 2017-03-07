@@ -127,6 +127,7 @@
                 }, {
                     field: 'loginName',
                     title: '登录名',
+                    width: 120,
                     formatter: function (value,row){
                         if(row.id == "${userInfo.id}"){
                             return "<span id='own'>"+value+"</span>"
@@ -135,10 +136,12 @@
                     }
                 }, {
                     field: 'name',
-                    title: '姓名'
+                    title: '姓名',
+                    width: 200
                 }, {
                     field: 'createTime',
                     title: '创建时间',
+                    width: 200,
                     formatter: function (value) {
                         return jsonTimeStamp(value);
                     }
@@ -146,6 +149,7 @@
                     {
                         field: 'sex',
                         title: '性别',
+                        width: 100,
                         formatter: function (value) {
                             switch (value) {
                                 case 0:
@@ -157,10 +161,12 @@
                     },
                     {
                         field: 'phone',
-                        title: '电话'
+                        title: '电话',
+                        width: 120
                     }, {
                         field: 'userType',
                         title: '用户类型',
+                        width: 100,
                         formatter: function (value) {
                             if (value == 0) {
                                 return "管理员";
@@ -172,6 +178,7 @@
                     }, {
                         field: 'state',
                         title: '状态',
+                        width: 100,
                         formatter: function (value) {
                             switch (value) {
                                 case 0:
@@ -220,16 +227,6 @@
             });
         });
 
-        $("#btn_edit").click(function () {
-
-            var selects = $table.bootstrapTable('getSelections');
-            var newSelects = $.parseJSON(JSON.stringify(selects));
-            if (newSelects.size > 1) {
-                layer.alert()
-            }
-            alert(newSelects[0].id)
-        });
-
     });
 
     //删除多条记录
@@ -264,7 +261,7 @@
             title:'修改',
             type: 2,
             skin: 'layui-layer-rim', //加上边框
-            area: ['600px', '450px'], //宽高
+            area: ['480px', '450px'], //宽高
             content: '/user/editPage?id='+id
         });
     }
