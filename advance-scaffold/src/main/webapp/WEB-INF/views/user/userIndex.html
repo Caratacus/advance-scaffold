@@ -103,8 +103,8 @@
 //                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
                 pageNumber: 1,                       //初始化加载第一页，默认第一页
                 queryParamsType: "undefined",
-                pageSize: 10,                       //每页的记录行数（*）
-                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                pageSize: 5,                       //每页的记录行数（*）
+                pageList: [5,10, 25, 50, 100],        //可供选择的每页的行数（*）
                 showColumns: true,                  //是否显示所有的列
                 queryParams: function queryParams(params) {
                     return {
@@ -216,19 +216,29 @@
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
 
-        $("#btn_add").click(function () {
-
-            top.layer.open({
-                title: '新增',
-                type: 2,
-                skin: 'layui-layer-rim', //加上边框
-                area: ['480px', '450px'], //宽高
-                content: '/user/addPage'
-            });
-        });
-
     });
 
+    $("#btn_add").click(function () {
+
+        layer.open({
+            title: '新增',
+            type: 2,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['480px', '450px'], //宽高
+            content: '/user/addPage'
+        });
+    });
+
+    function editPage(id) {
+
+        layer.open({
+            title:'修改',
+            type: 2,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['480px', '450px'], //宽高
+            content: '/user/editPage?id='+id
+        });
+    }
     //删除多条记录
     $("#btn_delete").click(function () {
         //获取选中行数据
@@ -254,17 +264,6 @@
             layer.alert('请选取要删除的数据行！');
         }
     });
-
-    function editPage(id) {
-
-        layer.open({
-            title:'修改',
-            type: 2,
-            skin: 'layui-layer-rim', //加上边框
-            area: ['480px', '450px'], //宽高
-            content: '/user/editPage?id='+id
-        });
-    }
 
     function deleteFun(id) {
         layer.confirm("您确定删除该用户吗?", {icon: 3, title: '提示'}, function (index) {

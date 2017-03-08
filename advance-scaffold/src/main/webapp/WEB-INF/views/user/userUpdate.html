@@ -61,8 +61,8 @@
 
                     <div class="col-lg-3">
                         <select name="userType" id="userType">
-                            <option value="0">管理员</option>
-                            <option value="1">用户</option>
+                            <option value="0" <#if user.userType==0>selected</#if>>管理员</option>
+                            <option value="1" <#if user.userType==1>selected</#if>>用户</option>
                         </select>
                     </div>
                 </div>
@@ -156,9 +156,7 @@
 
             $("input[name='sex']").get(${user.sex}).checked=true;
             $("input[name='state']").get(${user.state}).checked=true;
-            $("#userType option").eq('${user.userType}').attr("selected",true);
-//            $('#userType option:selected').val('${user.userType}');
-            $('#userType').multiselect('select', '1');
+
             if('${user.roleIds}' != null && '${user.roleIds}' != ""){
                 var roleIds = '${user.roleIds}';
                 roleIds = roleIds + ",";
@@ -238,7 +236,7 @@
                                 }, function(){
                                     //do something
                                     parent.layer.close(index); //执行关闭
-                                    // parent.$("#dataTable").load('/user/dataGrid');
+                                    parent.location.reload();
                                 });
 
                             }else{
