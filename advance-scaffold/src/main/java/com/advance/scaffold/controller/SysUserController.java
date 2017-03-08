@@ -48,7 +48,7 @@ public class SysUserController extends ConsoleController {
 			page.setCondition(MapUtils.beanToMapNotNull(user));
 			Page<SysUser> sysUsers = sysUserService.getUsers(page);
 			//服务器端分页
-			grid.setRows(sysUsers.getRecords());
+			//grid.setRows(sysUsers.getRecords());
 			//客户端分页
 			grid.setRows(sysUserService.selectList(Condition.Empty()));
 			grid.setTotal(sysUsers.getTotal());

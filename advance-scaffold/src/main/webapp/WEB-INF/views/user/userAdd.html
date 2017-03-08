@@ -244,6 +244,12 @@
 
     });
 
+    //关闭按钮事件
+    $(".btn-close").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+        parent.layer.close(index); //执行关闭
+    });
+
 </script>
 </body>
 </html>

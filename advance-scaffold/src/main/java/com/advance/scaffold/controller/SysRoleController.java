@@ -4,6 +4,7 @@ import com.advance.scaffold.core.constant.GlobalConstant;
 import com.advance.scaffold.core.controller.ConsoleController;
 import com.advance.scaffold.core.model.Grid;
 import com.advance.scaffold.core.model.Json;
+import com.baomidou.mybatisplus.mapper.Condition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,9 @@ import com.app.common.Common;
 import com.advance.scaffold.model.SysRole;
 import com.advance.scaffold.service.SysRoleService;
 import com.baomidou.mybatisplus.plugins.Page;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/role")
@@ -32,7 +36,8 @@ public class SysRoleController extends ConsoleController {
 		Grid grid = new Grid();
 		try {
 			Page<SysRole> sysRolePage = sysRoleService.dataGrid(role, getPage());
-			grid.setRows(sysRolePage.getRecords());
+//			grid.setRows(sysRolePage.getRecords());
+			grid.setRows(sysRoleService.selectList(Condition.Empty()));
 			grid.setTotal(sysRolePage.getTotal());
 			this.printJson(grid);
 		} catch (Exception e) {
@@ -76,6 +81,24 @@ public class SysRoleController extends ConsoleController {
 		Json json = new Json();
 		try {
 			sysRoleService.deleteById(id);
+			json.setMsg("删除成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg(e.getMessage());
+			logger.error(Common.method(), e);
+		}
+		this.printJson(json);
+	}
+
+	@RequestMapping("/deleteByIds")
+	@ResponseBody
+	public void deleteByIds(String ids) {
+		Json json = new Json();
+		try {
+			String[] idsStr = ids.split(",");
+			List list = Arrays.asList(idsStr);
+			sysRoleService.deleteBatchIds(list);
+
 			json.setMsg("删除成功！");
 			json.setSuccess(true);
 		} catch (Exception e) {
