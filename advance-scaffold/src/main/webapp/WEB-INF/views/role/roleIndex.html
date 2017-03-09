@@ -162,24 +162,27 @@
                 onCheck: function(row){
                     checkNum ++;
                     if(checkNum > 0){
-                        layer.alert(checkNum)
                         $("#btn_delete").removeAttr("disabled");
-                        $("#btn_edit").removeAttr("disabled");
                     }else{
-                        layer.alert(checkNum)
                         $("#btn_delete").attr('disabled','disabled');
+                    }
+                    if(checkNum != 1){
+                        $("#btn_edit").attr('disabled','disabled');
+                    }else{
+                        $("#btn_edit").removeAttr("disabled");
                     }
                 },
                 onUncheck: function(row){
                     checkNum --;
                     if(checkNum > 0){
-                        layer.alert(checkNum)
                         $("#btn_delete").removeAttr("disabled");
-                        $("#btn_edit").removeAttr("disabled");
                     }else{
-                        layer.alert(checkNum)
-                        $("#btn_delete").attr('disabled',true);
-                        $("#btn_delete").attr('disabled',true);
+                        $("#btn_delete").attr('disabled','disabled');
+                    }
+                    if(checkNum != 1){
+                        $("#btn_edit").attr('disabled','disabled');
+                    }else{
+                        $("#btn_edit").removeAttr("disabled");
                     }
                 }
             });
@@ -188,7 +191,7 @@
         return oTableInit;
     };
 
-
+    //添加记录
     $("#btn_add").click(function () {
 
         layer.open({
@@ -198,6 +201,42 @@
             area: ['480px', '380px'], //宽高
             content: '/role/addPage'
         });
+    });
+
+    //修改记录
+    $("#btn_edit").click(function () {
+        var datas = $.parseJSON(JSON.stringify($table.bootstrapTable('getSelections')));
+        layer.open({
+            title: '修改',
+            type: 2,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['480px', '380px'], //宽高
+            content: '/role/editPage?id='+datas[0].id
+        });
+    });
+
+
+    //删除多条记录
+    $("#btn_delete").click(function () {
+        //获取选中行数据
+        var datas = $.parseJSON(JSON.stringify($table.bootstrapTable('getSelections')));
+        var ids = "";
+        if (datas.length > 0) {
+            for (var i = 0; i < datas.length; i++) {
+                ids += datas[i].id + ",";
+            }
+            layer.confirm("您确定删除这些角色吗?", {icon: 3, title: '提示'}, function (index) {
+                $.post('/role/deleteByIds', {
+                    ids: ids
+                }, function (result) {
+                    if (result.success) {
+                        layer.alert(result.msg, {icon: 1});
+                        $table.bootstrapTable('refresh');
+                    }
+                }, 'JSON');
+            });
+
+        }
     });
 
     function editPage(id) {
@@ -221,34 +260,6 @@
         });
     }
 
-    //删除多条记录
-    $("#btn_delete").click(function () {
-        //获取选中行数据
-        var datas = $.parseJSON(JSON.stringify($table.bootstrapTable('getSelections')));
-        var ids = "";
-        if (datas.length > 0) {
-            for (var i = 0; i < datas.length; i++) {
-                ids += datas[i].id + ",";
-            }
-            layer.confirm("您确定删除这些角色吗?", {icon: 3, title: '提示'}, function (index) {
-                $.post('/role/deleteByIds', {
-                    ids: ids
-                }, function (result) {
-                    if (result.success) {
-                        layer.alert(result.msg, {icon: 1});
-                        $table.bootstrapTable('refresh');
-                    }
-                }, 'JSON');
-            });
-
-        } else {
-            layer.alert('请选取要删除的数据行', {
-                icon: 0,
-                title: '警告',
-                skin: 'layer-ext-moon'
-            });
-        }
-    });
 
     //删除单条记录
     function deleteFun(id) {
