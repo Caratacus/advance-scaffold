@@ -2,6 +2,7 @@ package com.advance.scaffold.service;
 
 import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.core.model.TreeResource;
+import com.advance.scaffold.core.model.ZTree;
 import com.advance.scaffold.model.SysResource;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -23,6 +24,7 @@ public interface SysResourceService extends IService<SysResource> {
 	public List<TreeResource> treeResources(Long userId);
 
 	public List<Tree> listAllTree(boolean flag);
+	public List<ZTree> listAllZTree(boolean flag);
 
 	public List<SysResource> treeGrid();
 

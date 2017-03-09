@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<#include "/common/include.html" />
+<head>
+    <title>角色授权</title>
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/lib/ztree/css/metro.css" media="all">
+
+    <script type="text/javascript" src="/static/lib/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrapValidator.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <form id="roleGrantForm" method="post" class="form-horizontal" action="/role/grant">
+                <input name="id" type="hidden"  value="${role.id}" readonly="readonly">
+                <ul id="tree" class="ztree" style="width:370px;height: 350px; overflow:auto;"></ul>
+                <input id="resourceIds" name="resourceIds" type="hidden" />
+
+                <div style="padding-top: 15px;text-align: right;">
+                    <button id="submit" type="button" class="btn btn-primary">确定</button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-close">关闭</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script>
+
+    layui.use(['jquery', 'layer'], function () {
+        window.jQuery = window.$ = layui.jquery;
+        window.layer = layui.layer;
+    });
+
+    $(function () {
+        //授权
+        $("#submit").click(function(){
+
+            var $form = $("#roleGrantForm");
+            //准备数据
+            var ztree = $.fn.zTree.getZTreeObj("tree");
+            var checknodes = ztree.getCheckedNodes(true);
+            var ids = [];
+            if (checknodes && checknodes.length > 0) {
+                for ( var i = 0; i < checknodes.length; i++) {
+                    ids.push(checknodes[i].id);
+                }
+            }
+            $('#resourceIds').val(ids);
+
+            $.post($form.attr('action'), $form.serialize(), function(data) {
+                    var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+
+                    if(data.success){
+                        parent.layer.msg(data.msg, {
+                            icon: 1,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            //do something
+                            parent.layer.close(index); //执行关闭
+                            parent.location.reload();
+                        });
+
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }, 'json');
+            });
+
+        });
+
+        //关闭按钮事件
+        $(".btn-close").click(function(){
+            var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+            parent.layer.close(index); //执行关闭
+
+         });
+
+    var zTree;
+    var demoIframe;
+
+    function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+        var addStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
+                + "' title='add node' onfocus='this.blur();'></span>";
+
+        addStr += "<span class='button add' id='addBtn_" + treeNode.tId + "'></span>";
+        addStr += "<span class='button edit' id='editBtn_" + treeNode.tId + "'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.addNodes(treeNode, {id: (1000 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+            return false;
+        });
+    }
+    ;
+
+    function removeHoverDom(treeId, treeNode) {
+        $("#addBtn_" + treeNode.tId).unbind().remove();
+        $("#removeBtn_" + treeNode.tId).unbind().remove();
+        $("#editBtn_" + treeNode.tId).unbind().remove();
+    };
+
+    var setting = {
+        async: {
+            enable: true,
+            contentType: "application/json",
+            url:"/resource/allTree?flag=true",
+            autoParam:["id", "name=n", "level=lv"],
+            otherParam:{"otherParam":"zTreeAsyncTest"},
+            dataFilter: filter
+        },
+        check: {
+            enable: true
+        },
+        view: {
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            dblClickExpand: false,
+            showLine: true,
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+                rootPId: ""
+            }
+        },
+        callback: {
+            beforeClick: function (treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                if (treeNode.isParent) {
+                    zTree.expandNode(treeNode);
+                    return false;
+                } else {
+                    demoIframe.attr("src", treeNode.file + ".html");
+                    return true;
+                }
+            },
+            onAsyncSuccess: zTreeOnAsyncSuccess
+        }
+    };
+
+    function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+        var zTree = $.fn.zTree.getZTreeObj("tree");
+        $.post( '/role/get', {
+            id : '${role.id}'
+        }, function(result) {
+            var ids;
+            if (result.id != undefined&&result.resourceIds!= undefined) {
+                ids = $.stringToList(result.resourceIds);
+            }
+            if (ids.length > 0) {
+                for ( var i = 0; i < ids.length; i++) {
+                    var node = zTree.getNodeByParam("id",ids[i], null);
+                    zTree.checkNode(node);
+                }
+            }
+        }, 'json');
+    };
+
+    function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i=0, l=childNodes.length; i<l; i++) {
+           childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+        }
+        return childNodes;
+    }
+
+    $(document).ready(function () {
+        var t = $("#tree");
+        t = $.fn.zTree.init(t, setting);
+        demoIframe = $("#testIframe");
+        demoIframe.bind("load", loadReady);
+        var zTree = $.fn.zTree.getZTreeObj("tree");
+        zTree.selectNode(zTree.getNodeByParam("id", 101));
+
+    });
+
+    function loadReady() {
+        var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
+                htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
+                maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
+                h = demoIframe.height() >= maxH ? minH : maxH;
+        if (h < 530) h = 530;
+        demoIframe.height(h);
+    }
+</script>
+
+</body>
+</html>

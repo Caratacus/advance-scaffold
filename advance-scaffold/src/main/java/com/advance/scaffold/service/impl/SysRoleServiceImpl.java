@@ -1,6 +1,7 @@
 package com.advance.scaffold.service.impl;
 
 import com.advance.scaffold.core.model.TreeLay;
+import com.app.common.StringUtils;
 import com.app.common.TypeConvert;
 import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.model.SysRole;
@@ -67,14 +68,16 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 	}
 
 	@Override
-	public void grant(SysRole role) {
+	public List<SysRoleResource> getRoleResources(SysRole role) {
 		// 清空该角色的所有权限
 		SysRoleResource roleResource = new SysRoleResource();
 		roleResource.setRoleId(role.getId());
 		sysRoleResourceService.delete(new EntityWrapper<SysRoleResource>(roleResource));
+		boolean flag = false;
 		// 添加该角色的所有权限
-		if ((role.getResourceIds() != null) && !role.getResourceIds().equalsIgnoreCase("")) {
-			List<SysRoleResource> sysRoleResources = new ArrayList<SysRoleResource>();
+		List<SysRoleResource> sysRoleResources = null;
+		if (StringUtils.isNoneBlank(role.getResourceIds())) {
+			sysRoleResources = new ArrayList<SysRoleResource>();
 			if (role.getResourceIds().contains(",")) {
 				for (String id : role.getResourceIds().split(",")) {
 					SysRoleResource sysRoleResource = new SysRoleResource();
@@ -88,8 +91,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 				sysRoleResource.setResourceId(TypeConvert.toLong(role.getResourceIds()));
 				sysRoleResources.add(sysRoleResource);
 			}
-			sysRoleResourceService.insertBatch(sysRoleResources);
 		}
+		return sysRoleResources;
 	}
 
 	@Override

@@ -1,22 +1,24 @@
 package com.advance.scaffold.controller;
 
-import com.advance.scaffold.core.constant.GlobalConstant;
-import com.advance.scaffold.core.controller.ConsoleController;
-import com.advance.scaffold.core.model.Json;
-import com.advance.scaffold.core.model.Tree;
-import com.advance.scaffold.core.model.UserSessionInfo;
-import com.advance.scaffold.model.SysResource;
-import com.advance.scaffold.service.SysResourceService;
-import com.app.common.Common;
-import com.app.common.JsonUtils;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.List;
+import com.advance.scaffold.core.constant.GlobalConstant;
+import com.advance.scaffold.core.controller.ConsoleController;
+import com.advance.scaffold.core.model.Json;
+import com.advance.scaffold.core.model.Tree;
+import com.advance.scaffold.core.model.UserSessionInfo;
+import com.advance.scaffold.core.model.ZTree;
+import com.advance.scaffold.model.SysResource;
+import com.advance.scaffold.service.SysResourceService;
+import com.app.common.Common;
+import com.app.common.JsonUtils;
 
 @Controller
 @RequestMapping("/resource")
@@ -43,7 +45,9 @@ public class SysResourceController extends ConsoleController {
 	public void allTree(boolean flag) {// true获取全部资源,false只获取菜单资源
 		try {
 			List<Tree> trees = sysResourceService.listAllTree(flag);
-			this.printJson(trees);
+			List<ZTree> ztrees = sysResourceService.listAllZTree(flag);
+
+			this.printJson(ztrees);
 		} catch (Exception e) {
 			logger.error(Common.method(), e);
 		}

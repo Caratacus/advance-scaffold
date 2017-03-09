@@ -2,6 +2,7 @@ package com.advance.scaffold.service.impl;
 
 import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.core.model.TreeResource;
+import com.advance.scaffold.core.model.ZTree;
 import com.advance.scaffold.mapper.SysResourceMapper;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.service.SysResourceService;
@@ -54,14 +55,40 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 				tree.setId(r.getId().toString());
 				if (r.getPid() != null) {
 					tree.setPid(r.getPid().toString());
-				}/*
-				 * else { tree.setState("closed"); }
-				 */
+				}
 				tree.setText(r.getName());
 				tree.setIconCls(r.getIcon());
 				Map<String, Object> attr = new HashMap<String, Object>();
 				attr.put("url", r.getUrl());
 				tree.setAttributes(attr);
+				lt.add(tree);
+			}
+		}
+		return lt;
+	}
+
+    @Override
+	public List<ZTree> listAllZTree(boolean flag) {
+
+		List<SysResource> l = null;
+		List<ZTree> lt = new ArrayList<ZTree>();
+		if (flag) {
+			l = sysResourceMapper.getAllResources();
+		} else {
+			l = sysResourceMapper.getResourceAllTree2();
+		}
+		if ((l != null) && (l.size() > 0)) {
+			for (SysResource r : l) {
+				ZTree tree = new ZTree();
+				tree.setId(r.getId());
+				if (r.getPid() != null) {
+					tree.setPid(r.getPid());
+				}
+
+				tree.setName(r.getName());
+//				Map<String, Object> attr = new HashMap<String, Object>();
+//				attr.put("url", r.getUrl());
+				tree.setFile(r.getUrl());
 				lt.add(tree);
 			}
 		}

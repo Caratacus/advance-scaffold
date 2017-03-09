@@ -1,22 +1,24 @@
 package com.advance.scaffold.controller;
 
-import com.advance.scaffold.core.constant.GlobalConstant;
-import com.advance.scaffold.core.controller.ConsoleController;
-import com.advance.scaffold.core.model.Grid;
-import com.advance.scaffold.core.model.Json;
-import com.baomidou.mybatisplus.mapper.Condition;
+import java.util.Arrays;
+import java.util.List;
+
+import com.advance.scaffold.service.SysRoleResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.app.common.Common;
+import com.advance.scaffold.core.controller.ConsoleController;
+import com.advance.scaffold.core.model.Grid;
+import com.advance.scaffold.core.model.Json;
 import com.advance.scaffold.model.SysRole;
+import com.advance.scaffold.model.SysRoleResource;
 import com.advance.scaffold.service.SysRoleService;
+import com.app.common.CollectionUtils;
+import com.app.common.Common;
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/role")
@@ -24,6 +26,9 @@ public class SysRoleController extends ConsoleController {
 
 	@Autowired
 	private SysRoleService sysRoleService;
+
+	@Autowired
+	private SysRoleResourceService sysRoleResourceService;
 
 	@RequestMapping("/manager")
 	public String manager() {
@@ -161,8 +166,18 @@ public class SysRoleController extends ConsoleController {
 	public void grant(SysRole role) {
 		Json json = new Json();
 		try {
-			sysRoleService.grant(role);
-			json.setMsg("授权成功！");
+			List<SysRoleResource> roleResources = sysRoleService.getRoleResources(role);
+			boolean flag = false;
+			if (CollectionUtils.isNotEmpty(roleResources)) {
+				flag = sysRoleResourceService.insertBatch(roleResources);
+			}
+			if (flag) {
+				json.setMsg("授权成功！");
+
+			} else {
+				json.setMsg("授权失败！");
+
+			}
 			json.setSuccess(true);
 		} catch (Exception e) {
 			json.setMsg(e.getMessage());

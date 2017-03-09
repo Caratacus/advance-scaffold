@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="/static/css/global.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/css/personal.css" media="all">
 
-    <script type="text/javascript" src="/static/lib/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="/static/lib/bootstrap-table/bootstrap-table.js"></script>
     <script type="text/javascript" src="/static/lib/bootstrap-table/bootstrap-table.min.js"></script>
@@ -34,36 +33,15 @@
     <div class="larry-personal">
 
         <div class="layui-tab">
-            <!--<div class="panel-body" style="padding-bottom:0px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading">查询条件</div>
-                    <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
-                            <div class="form-group" style="margin-top:10px">
-                                <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_departmentname">
-                                </div>
-                                <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_statu">
-                                </div>
-                                <div class="col-sm-4" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>-->
             <div id="toolbar" class="btn-group" style="margin-top:10px;margin-bottom: 10px;">
-                <button id="btn_add" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                <button id="btn_add" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
-                <!-- <button id="btn_edit" type="button" class="btn btn-default">
-                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                 </button>-->
-                <button id="btn_delete" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                <button id="btn_edit" class="btn btn-warning" disabled="" >
+                    <i class="glyphicon glyphicon-edit"></i> 编辑
+                </button>
+                <button id="btn_delete" class="btn btn-danger" disabled="" >
+                    <i class="glyphicon glyphicon-remove"></i> 删除
                 </button>
             </div>
         </div>
@@ -77,7 +55,6 @@
     var $table = $("#dataTable");
 
     $(function(){
-
         var oTable = new TableInit();
         oTable.Init();
     });
@@ -89,6 +66,7 @@
 
 
     var TableInit = function () {
+        var checkNum = 0;
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
@@ -162,15 +140,48 @@
                         file: '',
                         title: '操作',
                         formatter: function (value, row) {
-                            var str = '<a class="check" href="javascript:void(0)" title="授权" onClick="editPage(\'' + row.id + '\')"><i class="icon-check"></i></a>';
+//                            var str = '<a class="check" href="javascript:void(0)" title="授权" onClick="grantPage(\'' + row.id + '\')"><i class="icon-check"></i></a>';
+//                            if(row.isDefault == 0 ){
+//                                str += '&nbsp;&nbsp;<a class="edit" href="javascript:void(0)" title="编辑" onClick="editPage(\'' + row.id + '\')"><i class="icon-edit"></i></a>'
+//                                + '&nbsp;&nbsp;<a class="delete" href="javascript:void(0)" title="删除" onClick="deleteFun(\'' + row.id + '\')"><i class="icon-remove"></i></a>'
+//                            }
+                            var str = $.formatString('<button type="button" onclick="grantPage(\'{0}\');" class="btn btn-success btn-xs"><i class="icon-check"></i>&nbsp;授权</button>&nbsp;', row.id);
                             if(row.isDefault == 0 ){
-                                str += '&nbsp;&nbsp;<a class="edit" href="javascript:void(0)" title="编辑" onClick="editPage(\'' + row.id + '\')"><i class="icon-edit"></i></a>'
-                                + '&nbsp;&nbsp;<a class="delete" href="javascript:void(0)" title="删除" onClick="deleteFun(\'' + row.id + '\')"><i class="icon-remove"></i></a>'
+                                str += $.formatString('<button type="button" onclick="editPage(\'{0}\');" class="btn btn-warning btn-xs"><i class="icon-pencil"></i>&nbsp;编辑</button>&nbsp;', row.id);
+                                str += $.formatString('<button type="button" onclick="deleteFun(\'{0}\');" class="btn btn-danger btn-xs"><i class="icon-trash"></i>&nbsp;删除</button>&nbsp;', row.id);
                             }
+
                             return str;
                         }
                     }
-                ]
+                ],
+                onLoadSuccess: function(data){
+
+                    
+                },
+                onCheck: function(row){
+                    checkNum ++;
+                    if(checkNum > 0){
+                        layer.alert(checkNum)
+                        $("#btn_delete").removeAttr("disabled");
+                        $("#btn_edit").removeAttr("disabled");
+                    }else{
+                        layer.alert(checkNum)
+                        $("#btn_delete").attr('disabled','disabled');
+                    }
+                },
+                onUncheck: function(row){
+                    checkNum --;
+                    if(checkNum > 0){
+                        layer.alert(checkNum)
+                        $("#btn_delete").removeAttr("disabled");
+                        $("#btn_edit").removeAttr("disabled");
+                    }else{
+                        layer.alert(checkNum)
+                        $("#btn_delete").attr('disabled',true);
+                        $("#btn_delete").attr('disabled',true);
+                    }
+                }
             });
         };
 
@@ -197,6 +208,16 @@
             skin: 'layui-layer-rim', //加上边框
             area: ['480px', '380px'], //宽高
             content: '/role/editPage?id='+id
+        });
+    }
+
+    function grantPage(id) {
+        layer.open({
+            title:'权限设置',
+            type: 2,
+            area: ['400px', '450px'], //宽高
+            fix: false, //不固定
+            content: '/role/grantPage?id='+id
         });
     }
 
