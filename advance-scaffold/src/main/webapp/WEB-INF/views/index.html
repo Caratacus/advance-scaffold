@@ -44,29 +44,14 @@
             <!-- 右侧导航 -->
             <ul class="layui-nav larry-header-item">
                 <li class="layui-nav-item first">
-                    <a href="javascript:;">
-                        <img src="/static/images/userimg.jpg" class="userimg">
-                        <cite>默认站点</cite>
-                        <span class="layui-nav-more"></span>
+                    <a href="javascript:;" id="editPwd">
+                        <i class="icon-unlock"></i>
+                        修改密码
                     </a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="">站点1</a>
-                        </dd>
-                        <dd>
-                            <a href="">站点2</a>
-                        </dd>
-
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;" id="lock">
-                        <i class="iconfont icon-diannao1"></i>
-                        锁屏</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:void(0);" onclick="logout()">
-                        <i class="iconfont icon-exit"></i>
+                        <i class="icon-signout"></i>
                         退出</a>
                 </li>
             </ul>
@@ -76,9 +61,11 @@
     <div class="layui-side layui-side-bg layui-larry-side" id="larry-side">
         <div class="layui-side-scroll" id="larry-nav-side" lay-filter="side">
             <div class="user-photo">
-                <a class="img" title="我的头像" >
-                    <img src="/static/images/user.jpg" class="userimg1"></a>
-                <p>你好！admin, 欢迎登录</p>
+                <a class="img" title="我的头像">
+                    <#if userInfo.sex == 0><img src="/static/images/male.png" class="userimg1"></#if>
+                    <#if userInfo.sex == 1><img src="/static/images/female.png" class="userimg1"></#if>
+                </a>
+                <p>你好！${userInfo.name}, 欢迎登录</p>
             </div>
             <!-- 左侧菜单 -->
 
@@ -167,6 +154,17 @@
 </body>
 
 <script>
+
+    $("#editPwd").click(function(){
+
+        layer.open({
+            title: '${userInfo.name}-修改密码',
+            type: 2,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['380px', '350px'], //宽高
+            content: '/user/editPwdPage'
+        });
+    });
     function logout() {
         //询问框
 

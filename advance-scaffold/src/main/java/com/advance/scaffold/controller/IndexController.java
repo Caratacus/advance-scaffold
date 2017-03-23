@@ -57,6 +57,7 @@ public class IndexController extends ConsoleController {
 					sessionInfo.setId(sysUser.getId());
 					sessionInfo.setLoginName(sysUser.getLoginName());
 					sessionInfo.setName(sysUser.getName());
+					sessionInfo.setSex(sysUser.getSex());
 					sessionInfo.setResourceList(sysUserService.listResource(sysUser.getId()));
 					sessionInfo.setResourceAllList(sysResourceService.listAllResource());
 					session.setAttribute(GlobalConstant.USER_INFO, sessionInfo);

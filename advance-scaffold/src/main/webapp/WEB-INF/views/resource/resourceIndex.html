@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<#include "/common/include.html" />
+<head>
+    <meta charset="UTF-8">
+    <title>资源管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <!--引用的文件 Begin-->
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap-table/bootstrap-table.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/lib/bootstrap/css/bootstrap.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/global.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/personal.css" media="all">
+
+    <script src="/static/lib/treeTable/jquery.treeTable.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap-table/bootstrap-table.min.js"></script>
+    <!--引用的文件 End-->
+</head>
+<body>
+<section class="layui-larry-box" >
+    <div class="larry-personal">
+
+        <div class="layui-tab">
+            <div id="toolbar" class="btn-group" style="margin-top:10px;margin-bottom: 10px;">
+                <button id="btn_add" class="btn btn-primary" style="display:block;">
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+                <button id="btn_edit" class="btn btn-warning" style="display: block;" disabled="" >
+                    <i class="glyphicon glyphicon-edit"></i> 编辑
+                </button>
+                <button id="btn_delete" class="btn btn-danger" style="display: block;" disabled="" >
+                    <i class="glyphicon glyphicon-remove"></i> 删除
+                </button>
+            </div>
+        </div>
+        <table id="treeTable1" class="table table-bordered table-hover" data-mobile-responsive="true">
+            <thead>
+            <tr>
+                <th>资源名称</th>
+                <th>资源路径</th>
+                <th>排序</th>
+                <th>图标</th>
+                <th>资源类型</th>
+                <th>状态</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    </div>
+    </section>
+
+
+<script type="text/javascript">
+    function ajaxSubmitTest() {
+        $.ajax({
+            type: "post",
+            url: "/resource/treeGrid", //请求地址
+            dataType: "json",
+            success: function (data) {
+                var con = data.rows;//获取json中的list列表
+                var showContent = "";//添加内容变量
+                for (var i = 0, l = con.length; i < l; i++) {
+                    var a = con[i];
+                    if (a.parentid == null) { //判断是否是一级节点
+                        showContent += "<tr id='" + a.depart_id + "'>";
+                        showContent += "<td><span controller='true'>" + a.depart_name + "</span></td>";
+                        showContent += "<td>" + a.address + "</td>";
+                        showContent += "<td>" + a.depart_order + "</td>";
+                        showContent += "<td><i class='"+ a.icon+"'></i></td>";
+                        showContent += "<td>" + a.depart_type + "</td>";
+                        showContent += "<td>" + a.status + "</td>";
+                        showContent += "</tr>";
+                    } else {
+                        showContent += "<tr id='" + a.depart_id + "' pid='" + a.parentid + "'>";
+                        showContent += "<td>" + a.depart_name + "</td>";
+                        showContent += "<td>" + a.address + "</td>";
+                        showContent += "<td>" + a.depart_order + "</td>";
+                        showContent += "<td><i class='"+ a.icon+"'></i></td>";
+                        showContent += "<td>" + a.depart_type + "</td>";
+                        showContent += "<td>" + a.status + "</td>";
+                        showContent += "</tr>";
+                    }
+                }
+                $("#treeTable1").append(showContent);
+                //以下为初始化表格样式
+                var option = {
+                    theme: 'vsStyle',
+                    expandLevel: 2
+                };
+                $('#treeTable1').treeTable(option);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+                console.info("数据请求异常 请查看控制台错误 或者检查servlet配置")
+            }
+        });
+    }
+    $(function () {
+        ajaxSubmitTest(); //调用ajax初始化内容
+    });
+</script>
+</body>
+</html>

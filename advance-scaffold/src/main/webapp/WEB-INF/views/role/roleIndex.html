@@ -25,6 +25,7 @@
 
         }
     </style>
+
 </head>
 <body>
 
@@ -34,13 +35,13 @@
 
         <div class="layui-tab">
             <div id="toolbar" class="btn-group" style="margin-top:10px;margin-bottom: 10px;">
-                <button id="btn_add" class="btn btn-primary">
+                <button id="btn_add" class="btn btn-primary" style="display:none;">
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
-                <button id="btn_edit" class="btn btn-warning" disabled="" >
+                <button id="btn_edit" class="btn btn-warning" style="display: none;" disabled="" >
                     <i class="glyphicon glyphicon-edit"></i> 编辑
                 </button>
-                <button id="btn_delete" class="btn btn-danger" disabled="" >
+                <button id="btn_delete" class="btn btn-danger" style="display: none;" disabled="" >
                     <i class="glyphicon glyphicon-remove"></i> 删除
                 </button>
             </div>
@@ -49,9 +50,41 @@
         </table>
     </div>
     </div>
+
+    <#list userInfo.resourceList as r>
+        <#if r == '/role/add'>
+            <script type="text/javascript">
+                $("#btn_add").show();
+            </script>
+        </#if>
+        <#if r == '/role/add'>
+            <script type="text/javascript">
+                $("#btn_add").show();
+            </script>
+        </#if>
+        <#if r == '/role/edit'>
+            <script type="text/javascript">
+                $.canEdit = true;
+                $("#btn_edit").show();
+            </script>
+        </#if>
+        <#if r == '/role/delete'>
+            <script type="text/javascript">
+                $.canDelete = true;
+                $("#btn_delete").show();
+            </script>
+        </#if>
+        <#if r == '/role/grant'>
+            <script type="text/javascript">
+                $.canGrant = true;
+            </script>
+        </#if>
+    </#list>
 </section>
 <script type="text/javascript" src="/static/lib/layui/layui.js"></script>
 <script>
+
+
     var $table = $("#dataTable");
 
     $(function(){
@@ -140,25 +173,23 @@
                         file: '',
                         title: '操作',
                         formatter: function (value, row) {
-//                            var str = '<a class="check" href="javascript:void(0)" title="授权" onClick="grantPage(\'' + row.id + '\')"><i class="icon-check"></i></a>';
-//                            if(row.isDefault == 0 ){
-//                                str += '&nbsp;&nbsp;<a class="edit" href="javascript:void(0)" title="编辑" onClick="editPage(\'' + row.id + '\')"><i class="icon-edit"></i></a>'
-//                                + '&nbsp;&nbsp;<a class="delete" href="javascript:void(0)" title="删除" onClick="deleteFun(\'' + row.id + '\')"><i class="icon-remove"></i></a>'
-//                            }
-                            var str = $.formatString('<button type="button" onclick="grantPage(\'{0}\');" class="btn btn-success btn-xs"><i class="icon-check"></i>&nbsp;授权</button>&nbsp;', row.id);
+                            var str = "";
+                            if($.canGrant){
+                                str = $.formatString('<button type="button" onclick="grantPage(\'{0}\');" class="btn btn-success btn-xs"><i class="icon-check"></i>&nbsp;授权</button>&nbsp;', row.id);
+                            }
                             if(row.isDefault == 0 ){
-                                str += $.formatString('<button type="button" onclick="editPage(\'{0}\');" class="btn btn-warning btn-xs"><i class="icon-pencil"></i>&nbsp;编辑</button>&nbsp;', row.id);
-                                str += $.formatString('<button type="button" onclick="deleteFun(\'{0}\');" class="btn btn-danger btn-xs"><i class="icon-trash"></i>&nbsp;删除</button>&nbsp;', row.id);
+                                if($.canEdit){
+                                    str += $.formatString('<button type="button" onclick="editPage(\'{0}\');" class="btn btn-warning btn-xs"><i class="icon-pencil"></i>&nbsp;编辑</button>&nbsp;', row.id);
+                                }
+                                if($.canDelete){
+                                    str += $.formatString('<button type="button" onclick="deleteFun(\'{0}\');" class="btn btn-danger btn-xs"><i class="icon-trash"></i>&nbsp;删除</button>&nbsp;', row.id);
+                                }
                             }
 
                             return str;
                         }
                     }
                 ],
-                onLoadSuccess: function(data){
-
-                    
-                },
                 onCheck: function(row){
                     checkNum ++;
                     if(checkNum > 0){
@@ -193,7 +224,6 @@
 
     //添加记录
     $("#btn_add").click(function () {
-
         layer.open({
             title: '新增',
             type: 2,

@@ -1,7 +1,9 @@
 package com.advance.scaffold.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,14 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.advance.scaffold.core.constant.GlobalConstant;
 import com.advance.scaffold.core.controller.ConsoleController;
+import com.advance.scaffold.core.model.Grid;
 import com.advance.scaffold.core.model.Json;
-import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.core.model.ZTree;
+import com.advance.scaffold.model.Department;
 import com.advance.scaffold.model.SysResource;
+import com.advance.scaffold.model.TreeList;
 import com.advance.scaffold.service.SysResourceService;
 import com.app.common.Common;
 import com.app.common.JsonUtils;
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 
 @Controller
 @RequestMapping("/resource")
@@ -44,10 +50,25 @@ public class SysResourceController extends ConsoleController {
 	@ResponseBody
 	public void allTree(boolean flag) {// true获取全部资源,false只获取菜单资源
 		try {
-			List<Tree> trees = sysResourceService.listAllTree(flag);
+//			List<Tree> trees = sysResourceService.listAllTree(flag);
 			List<ZTree> ztrees = sysResourceService.listAllZTree(flag);
 
 			this.printJson(ztrees);
+		} catch (Exception e) {
+			logger.error(Common.method(), e);
+		}
+	}
+
+	@RequestMapping("/dataGrid")
+	@ResponseBody
+	public void dataGrid(SysResource resource) {
+		Grid grid = new Grid();
+		try {
+			Page<SysResource> sysResourcePage = sysResourceService.dataGrid(resource, getPage());
+//			grid.setRows(sysRolePage.getRecords());
+			grid.setRows(sysResourceService.selectList(Condition.Empty()));
+			grid.setTotal(sysResourcePage.getTotal());
+			this.printJson(grid);
 		} catch (Exception e) {
 			logger.error(Common.method(), e);
 		}
@@ -57,7 +78,15 @@ public class SysResourceController extends ConsoleController {
 	@ResponseBody
 	public void treeGrid() {
 		try {
-			this.printJson(sysResourceService.treeGrid());
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			List<Department> list = sysResourceService.treeGrid1();
+			TreeList tree = new TreeList(list);
+			List<Department> listTree = tree.buildTree();
+			map.put("rows", listTree);
+			map.put("total", listTree.size());
+
+			this.printJson(map);
 		} catch (Exception e) {
 			logger.error(Common.method(), e);
 		}

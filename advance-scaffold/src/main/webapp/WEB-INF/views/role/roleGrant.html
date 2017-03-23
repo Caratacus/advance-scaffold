@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <form id="roleGrantForm" method="post" class="form-horizontal" action="/role/grant">
+            <form id="form" method="post" class="form-horizontal" action="/role/grant">
                 <input name="id" type="hidden"  value="${role.id}" readonly="readonly">
                 <ul id="tree" class="ztree" style="width:370px;height: 350px; overflow:auto;"></ul>
                 <input id="resourceIds" name="resourceIds" type="hidden" />
@@ -42,7 +42,7 @@
         //授权
         $("#submit").click(function(){
 
-            var $form = $("#roleGrantForm");
+            var $form = $("#form");
             //准备数据
             var ztree = $.fn.zTree.getZTreeObj("tree");
             var checknodes = ztree.getCheckedNodes(true);

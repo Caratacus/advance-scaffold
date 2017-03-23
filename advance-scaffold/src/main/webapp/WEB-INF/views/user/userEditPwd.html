@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<#include "/common/include.html" />
+<head>
+    <title>密码修改</title>
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrapValidator.css"/>
+
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/lib/bootstrap/js/bootstrapValidator.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <#if (userInfo.name)??>
+                <form id="defaultForm" style="padding-top: 5px;" method="post" class="form-horizontal" action="/user/editUserPwd">
+
+                    <div class="form-group" style="display: none;">
+                        <label class="col-lg-3 control-label" >登录名</label>
+                        <div class="col-lg-3">
+                            <input type="hidden" name="loginName"  value="${userInfo.loginName}" class="form-control  input-sm" >
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" >原始密码</label>
+                        <div class="col-lg-3">
+                            <input type="password" name="oldPwd"  placeholder="请输入原始密码" class="form-control  input-sm" >
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" >新密码</label>
+                        <div class="col-lg-3">
+                            <input type="password" name="pwd"  placeholder="请输入新密码" class="form-control  input-sm" >
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" >确认新密码</label>
+                        <div class="col-lg-3">
+                            <input type="password" name="rePwd"  placeholder="请输入确认新密码" class="form-control  input-sm" >
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <button type="submit" class="btn btn-primary">提交</button> &nbsp;&nbsp;
+                            <button type="button" class="btn btn-close">关闭</button>
+                        </div>
+                    </div>
+                </form>
+                <#else>
+                    <div>登录已超时，请重新登录.</div>
+                    <script type="text/javascript" charset="utf-8">
+                        try {
+                            window.location.href='/welcome/index';
+                        } catch (e) {
+                        }
+                    </script>
+            </#if>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script type="text/javascript">
+
+
+    layui.use(['jquery','layer'],function(){
+        window.jQuery = window.$ = layui.jquery;
+        window.layer = layui.layer;
+
+    });
+
+    $(function() {
+
+        $('#defaultForm')
+                .bootstrapValidator({
+                    container: 'tooltip',
+                    message: 'This value is not valid',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        oldPwd: {
+                            message: 'The oldPwd is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The oldPwd is required'
+                                }
+                            }
+                        },
+                        pwd: {
+                            message: 'The pwd is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The pwd is required'
+                                },
+                                identical: {
+                                    field: 'rePwd',
+                                    message: 'The password and its confirm are not the same'
+                                },
+                                different: {
+                                    field: 'oldPwd',
+                                    message: 'The password cannot be the same as loginname/oldPwd'
+                                }
+                            }
+                        },
+                        rePwd: {
+                            message: 'The rePwd is not valid',
+                            validators: {
+                                notEmpty: {
+                                    message: 'The rePwd is required'
+                                },
+                                identical: {
+                                    field: 'pwd',
+                                    message: 'The password and its confirm are not the same'
+                                },
+                                different: {
+                                    field: 'oldPwd',
+                                    message: 'The password cannot be the same as loginname/oldPwd'
+                                }
+                            }
+                        }
+                    }
+                })
+                .on('success.form.bv', function(e) {
+                    // Prevent form submission
+                    e.preventDefault();
+
+                    // Get the form instance
+                    var $form = $(e.target);
+
+                    // Get the BootstrapValidator instance
+                    var bv = $form.data('bootstrapValidator');
+
+                    // Use Ajax to submit form data
+                    $.post($form.attr('action'), $form.serialize(), function(data) {
+                        var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+
+                        if(data.success){
+                            parent.layer.msg(data.msg, {
+                                icon: 1,
+                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                                parent.layer.close(index); //执行关闭
+                            });
+
+                        }else{
+                            layer.alert(data.msg);
+                        }
+                    }, 'json');
+                });
+    });
+
+    //关闭按钮事件
+    $(".btn-close").click(function(){
+        var index = parent.layer.getFrameIndex(window.name); //获取当前窗体索引
+        parent.layer.close(index); //执行关闭
+    });
+
+</script>
+</body>
+</html>

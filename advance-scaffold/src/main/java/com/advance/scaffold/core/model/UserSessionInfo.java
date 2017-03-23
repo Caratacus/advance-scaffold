@@ -7,6 +7,7 @@ public class UserSessionInfo implements java.io.Serializable {
 	private Long id;// 用户ID
 	private String loginName;// 登录名
 	private String name;// 姓名
+	private Integer sex;// 性别
 	private String ip;// 用户IP
 
 	private List<String> resourceList;// 用户可以访问的资源地址列表
@@ -59,6 +60,14 @@ public class UserSessionInfo implements java.io.Serializable {
 
 	public void setResourceAllList(List<String> resourceAllList) {
 		this.resourceAllList = resourceAllList;
+	}
+
+	public Integer getSex() {
+		return sex;
+	}
+
+	public void setSex(Integer sex) {
+		this.sex = sex;
 	}
 
 	@Override

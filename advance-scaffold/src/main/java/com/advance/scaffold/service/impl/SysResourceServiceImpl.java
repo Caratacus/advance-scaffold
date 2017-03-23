@@ -4,10 +4,13 @@ import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.core.model.TreeResource;
 import com.advance.scaffold.core.model.ZTree;
 import com.advance.scaffold.mapper.SysResourceMapper;
+import com.advance.scaffold.model.Department;
 import com.advance.scaffold.model.SysResource;
+import com.advance.scaffold.model.SysRole;
 import com.advance.scaffold.service.SysResourceService;
 import com.app.common.CollectionUtils;
 import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,9 +99,21 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	}
 
 	@Override
+	public Page<SysResource> dataGrid(SysResource resource, Page page) {
+		Page<SysResource> sysResourcePage = this.selectPage(page, Condition.instance().like("name", resource.getName()));
+		return sysResourcePage;
+	}
+
+	@Override
 	public List<SysResource> treeGrid() {
 		List<SysResource> l = sysResourceMapper.getResourceTree();
 		return l;
+	}
+
+	@Override
+	public List<Department> treeGrid1() {
+		List<Department> list = sysResourceMapper.getResourceTree1();
+		return list;
 	}
 
 	@Override

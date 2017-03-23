@@ -33,6 +33,13 @@ public class SysResource extends AutoBaseModel {
 	@TableField(value = "create_time")
 	private Date createTime;
 
+	@TableField(exist = false)
+	private String resourceTypeStr;
+
+	@TableField(exist = false)
+	private String stateStr;
+
+
 	public String getName() {
 		return this.name;
 	}
@@ -97,4 +104,19 @@ public class SysResource extends AutoBaseModel {
 		this.createTime = createTime;
 	}
 
+	public String getResourceTypeStr() {
+		return resourceTypeStr;
+	}
+
+	public void setResourceTypeStr(String resourceTypeStr) {
+		this.resourceTypeStr = resourceTypeStr;
+	}
+
+	public String getStateStr() {
+		return stateStr;
+	}
+
+	public void setStateStr(String stateStr) {
+		this.stateStr = stateStr;
+	}
 }

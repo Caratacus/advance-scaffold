@@ -28,6 +28,7 @@
 		INNER JOIN sys_role_resource srr ON sr.id = srr.resource_id
 		INNER JOIN sys_user_role sur ON srr.role_id = sur.role_id
 		${ew.sqlSegment}
+		order by sr.seq
 	</select>
 
 	<!--用于添加资源记录时显示所有资源tree-->
@@ -58,6 +59,28 @@
 		FROM
 		sys_resource re
 		left join sys_resource ree on re.id = ree.pid
+	</select>
+
+	<!--获取该用户tree列表-->
+	<select id="getResourceTree1" resultType="Department">
+		SELECT DISTINCT
+			re.id depart_id,
+			re.pid parentid,
+			re. NAME depart_name,
+			re.seq depart_order,
+			re.icon,
+			CASE re.resource_type
+				WHEN 0 THEN '菜单'
+				WHEN 1 THEN '按钮' END depart_type,
+			CASE re.state
+				WHEN 0 THEN '正常'
+				WHEN 1 THEN '停用' END status,
+			re.url address,
+			re.create_time AS create_time
+		FROM
+			sys_resource re
+		LEFT JOIN sys_resource ree ON re.id = ree.pid
+		order by re.seq
 	</select>
 	<!--显示所有资源tree-->
 	<select id="getAllResources" resultType="SysResource">

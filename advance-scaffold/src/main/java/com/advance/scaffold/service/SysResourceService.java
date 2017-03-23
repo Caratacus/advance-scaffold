@@ -3,7 +3,10 @@ package com.advance.scaffold.service;
 import com.advance.scaffold.core.model.Tree;
 import com.advance.scaffold.core.model.TreeResource;
 import com.advance.scaffold.core.model.ZTree;
+import com.advance.scaffold.model.Department;
 import com.advance.scaffold.model.SysResource;
+import com.advance.scaffold.model.SysRole;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
@@ -26,7 +29,9 @@ public interface SysResourceService extends IService<SysResource> {
 	public List<Tree> listAllTree(boolean flag);
 	public List<ZTree> listAllZTree(boolean flag);
 
+	public Page<SysResource> dataGrid(SysResource resource, Page page);
 	public List<SysResource> treeGrid();
+	public List<Department> treeGrid1();
 
 	/**
 	 * 查询所有资源列表
