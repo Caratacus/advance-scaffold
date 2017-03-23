@@ -33,12 +33,33 @@ public class SysResource extends AutoBaseModel {
 	@TableField(value = "create_time")
 	private Date createTime;
 
+	@TableField(value = "create_time")
+	private Integer seq;
+
 	@TableField(exist = false)
 	private String resourceTypeStr;
 
 	@TableField(exist = false)
 	private String stateStr;
 
+	public SysResource() {
+	}
+
+	public SysResource(Long id, String name, String url, String description, String icon, Integer pid, Integer state,
+					   Integer resourceType, String resourceTypeStr, Date createTime,String stateStr,Integer seq) {
+		this.id = id;
+		this.name = name;
+		this.url = url;
+		this.description = description;
+		this.icon = icon;
+		this.pid = pid;
+		this.state = state;
+		this.resourceType = resourceType;
+		this.createTime = createTime;
+		this.resourceTypeStr = resourceTypeStr;
+		this.stateStr = stateStr;
+		this.seq = seq;
+	}
 
 	public String getName() {
 		return this.name;
@@ -119,4 +140,20 @@ public class SysResource extends AutoBaseModel {
 	public void setStateStr(String stateStr) {
 		this.stateStr = stateStr;
 	}
+
+	public Integer getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
+
+	@Override
+	public String toString() {
+		return "SysResource{" + "id=" + id + ", name=" + name + ", url=" + url + ", description=" + description + ", icon="
+				+ icon + ", pid=" + pid + ", state=" + state + ",resourceType=" + resourceType + ", createTime=" + createTime
+				+ ", resourceTypeStr=" + resourceTypeStr + ",seq="+seq+" stateStr=" + stateStr + '}';
+	}
+
 }

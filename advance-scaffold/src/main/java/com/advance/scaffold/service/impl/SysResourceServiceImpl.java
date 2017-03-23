@@ -111,8 +111,8 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	}
 
 	@Override
-	public List<Department> treeGrid1() {
-		List<Department> list = sysResourceMapper.getResourceTree1();
+	public List<SysResource> treeGrid1() {
+		List<SysResource> list = sysResourceMapper.getResourceTree1();
 		return list;
 	}
 

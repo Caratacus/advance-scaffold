@@ -22,7 +22,7 @@
     <script type="text/javascript" src="/static/lib/bootstrap-table/bootstrap-table.min.js"></script>
     <!--引用的文件 End-->
 </head>
-<body>
+<body style="overflow: scroll;">
 <section class="layui-larry-box" >
     <div class="larry-personal">
 
@@ -42,12 +42,13 @@
         <table id="treeTable1" class="table table-bordered table-hover" data-mobile-responsive="true">
             <thead>
             <tr>
-                <th>资源名称</th>
-                <th>资源路径</th>
-                <th>排序</th>
-                <th>图标</th>
-                <th>资源类型</th>
-                <th>状态</th>
+                <th width="20%">资源名称</th>
+                <th width="20%">资源路径</th>
+                <th width="10%">排序</th>
+                <th width="10%">图标</th>
+                <th width="10%">资源类型</th>
+                <th width="10%">状态</th>
+                <th width="15%">操作</th>
             </tr>
             </thead>
         </table>
@@ -67,23 +68,25 @@
                 var showContent = "";//添加内容变量
                 for (var i = 0, l = con.length; i < l; i++) {
                     var a = con[i];
-                    if (a.parentid == null) { //判断是否是一级节点
-                        showContent += "<tr id='" + a.depart_id + "'>";
-                        showContent += "<td><span controller='true'>" + a.depart_name + "</span></td>";
-                        showContent += "<td>" + a.address + "</td>";
-                        showContent += "<td>" + a.depart_order + "</td>";
+                    if (a.pid == null) { //判断是否是一级节点
+                        showContent += "<tr id='" + a.id + "'>";
+                        showContent += "<td><span controller='true'>" + a.name + "</span></td>";
+                        showContent += "<td>" + a.url + "</td>";
+                        showContent += "<td>" + a.seq + "</td>";
                         showContent += "<td><i class='"+ a.icon+"'></i></td>";
-                        showContent += "<td>" + a.depart_type + "</td>";
-                        showContent += "<td>" + a.status + "</td>";
+                        showContent += "<td>" + a.resourceTypeStr + "</td>";
+                        showContent += "<td>" + a.stateStr + "</td>";
+                        showContent += "<td>按钮</td>";
                         showContent += "</tr>";
                     } else {
-                        showContent += "<tr id='" + a.depart_id + "' pid='" + a.parentid + "'>";
-                        showContent += "<td>" + a.depart_name + "</td>";
-                        showContent += "<td>" + a.address + "</td>";
-                        showContent += "<td>" + a.depart_order + "</td>";
+                        showContent += "<tr id='" + a.id + "' pid='" + a.pid + "'>";
+                        showContent += "<td>" + a.name + "</td>";
+                        showContent += "<td>" + a.url + "</td>";
+                        showContent += "<td>" + a.seq + "</td>";
                         showContent += "<td><i class='"+ a.icon+"'></i></td>";
-                        showContent += "<td>" + a.depart_type + "</td>";
-                        showContent += "<td>" + a.status + "</td>";
+                        showContent += "<td>" + a.resourceTypeStr + "</td>";
+                        showContent += "<td>" + a.stateStr + "</td>";
+                        showContent += "<td>按钮</td>";
                         showContent += "</tr>";
                     }
                 }

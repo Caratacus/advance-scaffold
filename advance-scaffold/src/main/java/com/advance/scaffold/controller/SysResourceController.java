@@ -17,7 +17,6 @@ import com.advance.scaffold.core.model.Grid;
 import com.advance.scaffold.core.model.Json;
 import com.advance.scaffold.core.model.UserSessionInfo;
 import com.advance.scaffold.core.model.ZTree;
-import com.advance.scaffold.model.Department;
 import com.advance.scaffold.model.SysResource;
 import com.advance.scaffold.model.TreeList;
 import com.advance.scaffold.service.SysResourceService;
@@ -80,9 +79,9 @@ public class SysResourceController extends ConsoleController {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 
-			List<Department> list = sysResourceService.treeGrid1();
+			List<SysResource> list = sysResourceService.treeGrid1();
 			TreeList tree = new TreeList(list);
-			List<Department> listTree = tree.buildTree();
+			List<SysResource> listTree = tree.buildTree();
 			map.put("rows", listTree);
 			map.put("total", listTree.size());
 

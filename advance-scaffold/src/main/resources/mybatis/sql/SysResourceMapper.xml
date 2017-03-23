@@ -62,21 +62,21 @@
 	</select>
 
 	<!--获取该用户tree列表-->
-	<select id="getResourceTree1" resultType="Department">
+	<select id="getResourceTree1" resultType="SysResource">
 		SELECT DISTINCT
-			re.id depart_id,
-			re.pid parentid,
-			re. NAME depart_name,
-			re.seq depart_order,
+			re.id,
+			re.pid,
+			re. NAME,
+			re.seq,
 			re.icon,
 			CASE re.resource_type
 				WHEN 0 THEN '菜单'
-				WHEN 1 THEN '按钮' END depart_type,
+				WHEN 1 THEN '按钮' END resourceTypeStr,
 			CASE re.state
 				WHEN 0 THEN '正常'
-				WHEN 1 THEN '停用' END status,
-			re.url address,
-			re.create_time AS create_time
+				WHEN 1 THEN '停用' END stateStr,
+			re.url,
+			re.create_time AS createTime
 		FROM
 			sys_resource re
 		LEFT JOIN sys_resource ree ON re.id = ree.pid

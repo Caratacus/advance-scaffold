@@ -1,7 +1,6 @@
 package com.advance.scaffold.mapper;
 
 import com.advance.scaffold.core.model.TreeResource;
-import com.advance.scaffold.model.Department;
 import com.advance.scaffold.model.SysResource;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -33,7 +32,7 @@ public interface SysResourceMapper extends BaseMapper<SysResource> {
 	 *
 	 * @return
 	 */
-	public List<Department> getResourceTree1();
+	public List<SysResource> getResourceTree1();
 
 	/**
 	 * 获取当前用户的所有tree列表--用于添加资源记录时显示所有资源tree

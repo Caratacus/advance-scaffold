@@ -6,13 +6,8 @@
 * @mail zhanchaojiang@qq.com
 */
 (function ($) {
-    window.SITE_URL = window.SITE_URL || '';
-    if (document.location.href.indexOf('http://') != 0)	{
-        var path = '../js/treeTable/';
-    } else {
-        var path = SITE_URL + 'js/treeTable/';
-    }
-    path='/static/js/treeTable/';
+
+   var path='/static/lib/treeTable/';
 
     $.fn.treeTable = function (opts) {
         opts = $.extend({
